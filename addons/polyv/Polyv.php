@@ -43,7 +43,7 @@ static;
 
 		//获取保利威视视频分类信息
 		public function getVideoCate() {
-			$readtoken = 'dec8c822-1906-4e0e-aee8-6cea2ae5c160';
+			$readtoken = 'a polyv token';
 			$result    = file_get_contents( 'http://v.polyv.net/uc/services/rest?method=getCata&readtoken=' . $readtoken );
 			return json_decode( $result );
 		}
