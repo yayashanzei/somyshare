@@ -1,0 +1,53 @@
+{include file="public/header" /}
+<script type="text/javascript" charset="utf-8" src="{$Think._COMMON}/plupload/plupload.full.min.js"></script>
+
+<div class="layout min-height">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            {include file="member/left" /}
+        </div>
+
+        <div class="x9">
+
+            <div class="x11 margin-large-left">
+                <div class="margin-big-bottom padding-bottom border-small border-red border-bottom ">
+                    <h2>分享列表</h2>
+                </div>
+
+                <div class="box">
+
+                    <div class="head">
+                        <a class="button padding-large-left padding-large-right bg-inverse bg-yellow radius-none" href="/member/myshare?type=article">干　货</a>
+                        <a class="button padding-large-left padding-large-right bg-inverse bg-green radius-none" href="/member/myshare?type=video">视　频</a>
+
+                    </div>
+
+                    <div class="main margin-large-top">
+                        <ul class="list-unstyle">
+                            {if !empty($docList)}
+                            {volist name="docList" id="dl"}
+                                <li class="margin-top margin-bottom padding-small-top padding-small-bottom">
+                                    <a href="/member/delshare/?type={$preUrl}&id={$dl.id}" onclick="indexAjaxAsk(this,{ask:0,layer:{title:'删除提示',content:'确定要执行删除操作吗？',btn: ['确定', '取消']}});return false;" target="_blank">[删除]</a>
+                                    <a href="/member/editshare/?type={$preUrl}&id={$dl.id}" target="_blank">[编辑]</a>
+                                    <a href="/{$preUrl}/{$dl.id}" target="_blank" class="margin-left margin-right text-big">{$dl.title}</a>
+                                    {$dl.create_time|timeToDate}
+                                </li>
+                            {/volist}
+                            {/if}
+                        </ul>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

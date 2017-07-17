@@ -1,0 +1,49 @@
+{if isset($fieldEnum[72]['_'])}
+{volist name="fieldEnum[72]['_']" id='field' key='k'}
+<div class="panel margin-small-right x3 sort_group" title="{$field.id}">
+
+    <div class="panel-head bg-gray bg-inverse">{$field.title}</div>
+
+    <div class="panel-body sort_body">
+        <ul class="list-unstyle height-big" id="list{$k}">
+            {if (isset($info[$field['id']]))}
+            {volist name="info[$field['id']]" id="in"}
+            <li class="margin-small-bottom bg-whitesmoke padding-left padding-right radius">
+                <div title="{$in.id}" class="">{$in.title}
+                    <span class="text-gray">[{$in.name}]</span>
+                </div>
+            </li>
+            {/volist}
+            {/if}
+        </ul>
+    </div>
+</div>
+
+{/volist}
+{/if}
+
+<input name="listSortOrder" type="hidden"/>
+
+<script type="text/javascript">
+    saveOrder();
+    $("#sort_list").find('ul').dragsort({
+        dragSelector: "div",
+        dragBetween: true,
+        dragEnd: saveOrder,
+        placeHolderTemplate: "<li class='border-mix border-dashed border radius margin-small-bottom padding-left padding-right'><div>　</div></li>"
+    });
+
+    function saveOrder() {
+        var data = new Array();
+        $('.sort_group').each(function () {
+            var _this = $(this);
+            data.push(
+                    _this.find('li').map(function () {
+                        return $(this).children().attr('title') +'-'+ _this.attr('title');
+                    }).get()
+            );
+        });
+
+        $("input[name=listSortOrder]").val(data.join(","));
+    }
+</script>

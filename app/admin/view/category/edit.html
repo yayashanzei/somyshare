@@ -1,0 +1,145 @@
+﻿<div class="margin-big-bottom">
+    <h2>{:isset($info['id'])?'编辑':'新增'}分类</h2>
+</div>
+<div class="tab">
+    <div class="tab-head">
+        <ul class="tab-nav">
+            <li class="active"><a href="#tab-base" onfocus="this.blur()">基 础</a></li>
+            <li><a href="#tab-high" onfocus="this.blur()">高 级</a></li>
+        </ul>
+    </div>
+    <div class="tab-body">
+        <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="tab-panel active" id="tab-base">
+            <div class="form-group">
+                <div class="label">
+                    <label>上级分类 </label>
+                </div>
+                <div class="field">
+                    <input type="text" class="input input-auto" name="title" size="60" disabled="disabled" value="{$category['title']|default='无'}" >
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label" for="model">
+                    <label>内容模型 </label><span class="text-gray">（选择分类所属模型）</span>
+                </div>
+                <div class="field">
+                    <select name="model" id="model" class="input input-auto" style="width:433px;">
+                        {if !empty($model)}
+                        {volist name='model' id='md'}
+                        <option value="{$md.id}">{$md.title}</option>
+                        {/volist}
+                        {else}
+                        <option value="0">暂无可用模型</option>
+                        {/if}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>分类名称 </label><span class="text-gray">（名称不能为空）</span>
+                </div>
+                <div class="field">
+                    <input type="text" class="input input-auto" name="title" size="60" value="{$cate.title|default=''}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>分类标识 </label><span class="text-gray">（只能为英文字母）</span>
+                </div>
+                <div class="field">
+                    <input type="text" class="input input-auto" name="name" size="60" value="{$cate.name|default=''}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>关键词 </label><span class="text-gray">（分类关键词）</span>
+                </div>
+                <div class="field">
+                    <input type="text" class="input input-auto" name="keywords" size="60" value="{$cate.keywords|default=''}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>描述 </label><span class="text-gray">（分类描述）</span>
+                </div>
+                <div class="field">
+                    <textarea rows="5" class="input" name="description" placeholder="请输入分类描述" style="width:600px;">{$cate.description|default=''}</textarea>
+                </div>
+            </div>
+
+            {:hook('picture',array( 'title' => '分类图标', 'name' => 'cover', 'cover' => (empty($cate['cover'])?'':$cate['cover']) ))}
+
+<!--            <div class="form-group">
+                <div class="label">
+                    <label>分类图标 </label><span class="text-gray">（分类图标）</span>
+                </div>
+                <div class="field">
+                    <a class="button input-file" href="javascript:void(0);">+ 浏览文件<input size="100" type="file" name="icon" /></a>
+                </div>
+            </div>-->
+
+        </div>
+        <div class="tab-panel" id="tab-high">
+            <div class="form-group">
+                <div class="label">
+                    <label>可见性 </label><span class="text-gray">是否对用户可见，针对前台</span>
+                </div>
+                <div class="field">
+                    <label><input type="radio" name="display" value="0"> 不可见</label>
+                    <label><input type="radio" name="display" class="margin-left" value="1"> 所有人可见</label>
+                    <label><input type="radio" name="display" class="margin-left" value="2"> 管理员可见</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>是否审核 </label><span class="text-gray">在该分类下发布的内容是否需要审核</span>
+                </div>
+                <div class="field">
+                    <label><input type="radio" name="check" value="0"> 不需要</label>
+                    <label><input type="radio" name="check" class="margin-left" value="1"> 需要</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>发布内容 </label><span class="text-gray">是否允许发布内容</span>
+                </div>
+                <div class="field">
+                    <label><input type="radio" name="allow_publish" value="0"> 不允许</label>
+                    <label><input type="radio" name="allow_publish" class="margin-left" value="1"> 仅允许后台</label>
+                    <label><input type="radio" name="allow_publish" class="margin-left" value="2"> 允许前后台</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>排序 </label><span class="text-gray">（仅对当前层级分类有效）</span>
+                </div>
+                <div class="field">
+                    <input type="text" class="input input-auto" size="20" name="sort" value="{$cate.sort|default=0}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
+                    <label>cataid </label><span class="text-gray">（保利威视视频分类id）</span>
+                </div>
+                <div class="field">
+                    <input type="text" class="input input-auto" size="20" name="cataid" value="{$cate.cataid|default=0}">
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$category.id|default=''}">
+            <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+            <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+        </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("input[type=radio][name=display][value=" + {$cate.display | default = '1'} +"]").attr("checked", 'checked');
+    $("input[type=radio][name=check][value=" + {$cate.check | default = '0'}+"]").attr("checked", 'checked');
+    $("input[type=radio][name=allow_publish][value=" + {$cate.allow_publish | default = '1'}+"]").attr("checked", 'checked');
+    setValue("model", {$cate.model|default= 0});
+</script>

@@ -1,0 +1,73 @@
+    <div class="margin-big-bottom">
+        <h2>插件配置 [ {$data['title']} ]</h2>
+    </div>
+    <form action="{:U('saveConfig')}" method="post" class="form-horizontal">
+        {foreach name="config" item="c" key="key"}
+        {switch name="c.type"}
+        {case value="text"}
+        <div class="form-group">
+            <div class="label">
+                <label>{$c.title} </label>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" name="{$key}" size="60" value="{$c.value|default=''}">
+            </div>
+        </div>
+        {/case}
+        {case value="textarea"}
+        <div class="form-group">
+            <div class="label">
+                <label>{$c.title} </label>
+            </div>
+            <div class="field">
+                <textarea rows="5" class="input" name="{$key}" placeholder="" style="width:600px;">{$c.value|default=''}</textarea>
+            </div>
+        </div>
+        {/case}
+        {case value="checkbox"}
+        <div class="form-group">
+            <div class="label">
+                <label>{$c.title} </label>
+            </div>
+            <div class="field">
+                {foreach name="c.options" item="o" key="k"}
+                <input type="checkbox" name="{$key}[]" size="60" value="{$k}" {in name="$k" value="$c.value"}checked="checked"{/in}> <span class="margin-right">{$o|default=''}</span>
+                {/foreach}
+            </div>
+        </div>
+        {/case}
+        {case value="radio"}
+        <div class="form-group">
+            <div class="label">
+                <label>{$c.title} </label>
+            </div>
+            <div class="field">
+                {foreach name="c.options" item="o" key="k"}
+                <input type="radio" name="{$key}" size="60" value="{$k}" {eq name="c.value" value="$k"}checked="checked"{/eq}> <span class="margin-right">{$o|default=''}</span>
+                {/foreach}
+            </div>
+        </div>
+        {/case}
+        {case value="select"}
+        <div class="form-group">
+            <div class="label">
+                <label>{$c.title} </label>
+            </div>
+            <div class="field">
+                <select name="{$key}" class="input input-auto" style="width:433px;">
+                    {foreach name="c.options" item="o"}
+                    <option value="{$key}" {eq name="c.value" value="$key"}selected="selected"{/eq}>{$o}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        {/case}
+        {default /}
+        {/switch}
+        {/foreach}
+        <div class="form-group">
+            <input type="hidden" name="name" value="{$data['name']|default=''}">
+            <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U('saveConfig')}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+            <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U('saveConfig')}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+        </div>
+    </form>

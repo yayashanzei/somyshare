@@ -1,0 +1,34 @@
+{include file="public/header" /}
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            <ul class="list-group">
+                {volist name="tradeCate" id="cate"}
+                <li class="text-default"><strong><a href="/trade/{$cate.id}" class="padding-big-left">{$cate.title}</a></strong></li>
+                {if !empty($cate['_'])}
+                {volist name="cate['_']" id="child"}
+                <li><span class="float-right badge">0</span><a href="/trade/{$child.id}" class="padding-big-left">{$child.title}</a> </li>
+                {/volist}
+                {/if}
+                {/volist}
+            </ul>
+        </div>
+        <div class="x9">
+            <div class="margin-large-bottom">
+                <h4 class="text-center"><strong>{$article.title}</strong></h4>
+                <div class="text-center margin-big-top">
+                    <span class="margin-right">分享者：{$article.uid|getUserBase}</span>
+                    <span class="margin-right">阅读次数：{$article.views}</span>
+                    <span class="margin-right">分享时间：{$article.create_time|timeToDate}</span>
+                </div>
+            </div>
+            <div class="margin-large-top">
+                <div class="margin-large-left margin-large-right">{$article.content|getContent}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

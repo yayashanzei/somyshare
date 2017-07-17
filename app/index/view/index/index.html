@@ -1,0 +1,43 @@
+{include file="public/header" /}
+
+<div class="banner layout" data-pointer="0">
+    <div class="carousel layout">
+        <div class="item img-responsive"><img src="{$Think._IMG}/banner1.jpg" class="img-responsive"/></div>
+        <div class="item  img-responsive"><img src="{$Think._IMG}/banner1.jpg" class="img-responsive"/></div>
+        <div class="item  img-responsive"><img src="{$Think._IMG}/banner1.jpg" class="img-responsive"/></div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(window).resize(function () {
+        var resize = $('.carousel');
+        var windowsize = parseInt($(window).width());
+        resize.find('img').width(windowsize);
+        resize.find('.item').width(windowsize);
+        resize.width(windowsize * 3);
+    });
+</script>
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x4">
+            <img class="img-responsive" src="{$Think._IMG}/p1.jpg"/>
+        </div>
+        <div class="x4">
+            <img class="img-responsive zoom_img_2" src="{$Think._IMG}/p2.jpg"/>
+        </div>
+        <div class="x4">
+            <img class="img-responsive float-right" src="{$Think._IMG}/p3.jpg"/>
+        </div>
+    </div>
+</div>
+
+<div class="layout">
+    <div class="container">
+        <img src="{$Think._IMG}/p2c.jpg" class="img-responsive"/>
+    </div>
+</div>
+
+
+{include file="public/footer" /}
+
+

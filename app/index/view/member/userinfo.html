@@ -1,0 +1,133 @@
+{include file="public/header" /}
+<script type="text/javascript" charset="utf-8" src="{$Think._COMMON}/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="{$Think._COMMON}/avatar/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{$Think._COMMON}/avatar/jquery.Jcrop.min.css"/>
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            {include file="member/left" /}
+        </div>
+
+        <div class="x9 course-list">
+
+            <div class="x11 margin-large-left">
+                <div class="margin-big-bottom padding-bottom border-small border-red border-bottom ">
+                    <h2>个人资料编辑</h2>
+                </div>
+
+                <form class="form-horizontal padding-big-left">
+
+                    <div class="form-group">
+                        <div class="label">
+                            <label>用户昵称 </label><span class="text-gray"></span>
+                        </div>
+                        <div class="field">
+                            <input type="text" class="input input-auto" size="70" name="name" value="{:isset($info.name)?$info.name:''}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group button-group radio">
+                        <div class="label">
+                            <label>性别 </label><span class="text-gray"></span>
+                        </div>
+                        <label class="button">
+                            <input name="sex" value="0" type="radio"><span class="icon icon-check"></span> 男
+                        </label>
+                        <label class="button">
+                            <input name="sex" value="1" type="radio"><span class="icon icon-check"></span> 女
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label">
+                            <label>联系人 </label><span class="text-gray">（无需修改请留空）</span>
+                        </div>
+                        <div class="field">
+                            <input type="text" class="input input-auto" size="70" name="linkman"
+                                   value="{:isset($info.linkman)?$info.linkman:''}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label">
+                            <label>公司名称 </label><span class="text-gray">（无需修改请留空）</span>
+                        </div>
+                        <div class="field">
+                            <input type="text" class="input input-auto" size="70" name="company"
+                                   value="{:isset($info.company)?$info.company:''}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label" for="scale">
+                            <label>公司规模 </label><span class="text-gray">（至少选择1项）</span>
+                        </div>
+                        <div class="field">
+                            <select name="scale" class="input input-auto button" id="scale" data-validate="required:请选择,length#>=1:至少选择1项">
+                                <option value="0"> 0 - 30 人</option>
+                                <option value="1"> 30 - 60 人</option>
+                                <option value="2"> 60 - 100 人</option>
+                                <option value="3"> 100 - 200 人</option>
+                                <option value="4"> 200 - 500 人</option>
+                                <option value="5"> 500 - 1000 人</option>
+                                <option value="6"> 1000 - 10000 人</option>
+                                <option value="7"> 万人以上</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label">
+                            <label>地址 </label><span class="text-gray"></span>
+                        </div>
+                        <div class="field">
+                            <input type="text" class="input input-auto" size="70" name="address"
+                                   value="{:isset($info.address)?$info.address:''}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label">
+                            <label>行业 </label><span class="text-gray"></span>
+                        </div>
+                        <div class="field">
+                            <input type="text" class="input input-auto" size="70" name="trade" value="{:isset($info.trade)?$info.trade:''}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="uid" value="{$info.uid|default=''}">
+                        <a class="button bg-green padding-large-left padding-large-right" id="submit" href="{:U('userInfoEdit')}"
+                           onclick="indexAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+                    </div>
+                </form>
+
+                <script type="text/javascript">
+
+                    $("input[type=radio][name=sex][value=" + {$info.sex |
+                    default
+                    = '0'
+                    }
+                    +"]"
+                    ).attr("checked", 'checked').parent('.button').addClass('active');
+                    setValue("scale", {$info.scale |
+                    default
+                    = 0
+                    })
+                    ;
+                    setValue("groupid", {$info.groupid |
+                    default
+                    = 0
+                    })
+                    ;
+                </script>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

@@ -1,0 +1,39 @@
+{include file="public/header" /}
+
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            <ul class="list-group">
+            {volist name="videoCate" id="cate"}
+                <li class="text-default"><strong>{$cate.title}</strong></li>
+                {volist name="cate['_']" id="child"}
+                <li><span class="float-right badge">{$child.id|getCourseByCate}</span><a href="/course/{$child.id}" class="padding-big-left">{$child.title}</a> </li>
+                {/volist}
+            {/volist}
+            </ul>
+        </div>
+        <div class="x9 course-list">
+            <ul class="list-unstyle margin-big-left">
+            {volist name="course" id="c"}
+                <li class="x3 float-left margin-large-left margin-large-right margin-large-bottom">
+                    <a href="/learn/{$c.id}" >
+                    <div class="course-list-img">
+                        <img class="x12 border" src="{$c.cover|getCover}" alt="{$c.title}" style="height:135px" />
+                    </div>
+                    <h5>
+                        <span class="">{$c.title}</span>
+                    </h5>
+                    <div class="tips">
+                        <p>{$c.intro}</p>
+                    </div>
+                    </a>
+                </li>
+            {/volist}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

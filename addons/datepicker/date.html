@@ -1,0 +1,89 @@
+{if(!empty($static_WdatePicker))}
+{$static_WdatePicker}
+{/if}
+
+{switch name = "date.type"}
+{case value = "1" break='1'}
+{literal}
+        <div class="form-group">
+            <div class="label">
+                <label>日期选择 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input type="text" class="Wdate" id="d1" onFocus="WdatePicker({dateFmt:'HH:mm:ss'})"/>
+            </div>
+        </div>
+
+{/literal}
+{/case}
+{case value = "2"  break='1'}
+        <div class="form-group">
+            <div class="label">
+                <label>{$date2.title} </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input type="text" name="{$date2.name}" value="{$date2.create_time|timeToDate}" class="Wdate" id="d2" {literal} onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" {/literal} />
+            </div>
+        </div>
+{/case}
+{case value = "3" break='1'}
+    {literal}
+        <div class="form-group">
+            <div class="label">
+                <label>日期选择 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input type="text" class="Wdate" id="d3" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4\');}'})"/>
+                <input type="text" class="Wdate" id="d4" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d3\');}'})"/>
+            </div>
+        </div>
+    {/literal}
+{/case}
+{case value = "4" break='1'}
+{literal}
+        <div class="form-group">
+            <div class="label">
+                <label>日期选择 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input type="text" class="Wdate" id="d5" onFocus="WdatePicker({dateFmt:'HH:mm:ss'})"/>
+                <input type="text" class="Wdate" id="d6" onFocus="WdatePicker({dateFmt:'HH:mm:ss',minDate:'#F{$dp.$D(\'d5\');}'})"/>
+            </div>
+        </div>
+{/literal}
+{/case}
+{case value = "5" break='1'}
+        <div class="form-group">
+            <div class="label">
+                <label>日期选择 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input type="text" class="Wdate" id="d7" onFocus="{literal}WdatePicker({minDate:'%y-%M-%d'}){/literal}"/>
+                <input type="text" class="Wdate" id="d8" onFocus="{literal}WdatePicker({minDate:'#F{$dp.$D(\'d7\');}',maxDate:'#F{$dp.$D(\'d7\',{d:{/literal}{$date.day}{literal}});}'}){/literal}"/>
+            </div>
+        </div>
+   {/case}
+{case value = "6" break='1'}
+{literal}
+        <div class="form-group">
+            <div class="label">
+                <label>日期选择 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input type="text" class="Wdate" id="d9" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d10\');}',dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+                <input type="text" class="Wdate" id="d10" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d9\');}',dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+            </div>
+        </div>
+   {/literal}
+{/case}
+{default /}
+        <div class="form-group">
+            <div class="label">
+                <label>{$date.info.title} </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input name="{$date.info.name}" class="Wdate" type="text" onClick="WdatePicker()">
+            </div>
+        </div>
+
+{/switch}

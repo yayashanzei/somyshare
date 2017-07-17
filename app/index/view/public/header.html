@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="keywords" content="索镁"/>
+<meta name="description" content="SOMYSHARE外贸营销分享平台。"/>
+<title>SOMYSHARE外贸营销分享平台</title>
+{if(!empty($static_base))}
+{$static_base}
+{/if}
+<!--[if lt IE 10]>
+<script src="{$Think._COMMON}/js/PIE.js"></script>
+<![endif]-->
+<script src="{$Think._JS}/index.js"></script>
+<link type="image/x-icon" href="/favicon.ico" rel="shortcut icon"/>
+<link href="/favicon.ico" rel="bookmark icon"/>
+</head>
+<body>
+
+<div class="layout margin-big-top margin-big-bottom">
+    <div class="container">
+        <div class="x12">
+            <div class="x3">
+                <a href="/"><img src="{$Think._IMG}/logo.jpg"/></a>
+            </div>
+            <div class="x6">
+
+            </div>
+            <div class="x3">
+                <div class="float-right hidden-l">
+                    {if empty($userInfo)}
+                        <a href="/login" class="text-big margin-large-top">登录</a>
+                        <span class="text-default text-gray padding-left padding-right"> | </span>
+                        <a href="/register" class="text-big">注册</a>
+                    {else/}
+                        <div class="button-group">
+                            <ul class="nav nav-menu nav-inline nav-navicon">
+                                <li class="active">
+                                    <a href="#">
+                                        {if !empty($userInfo['avatarPic'])}
+                                        <img src="{$userInfo['avatarPic']}" onerror="this.src='{$Think._IMG}/nologin.gif'" class="radius-circle avatar border" />
+                                        {else/}
+                                        <img src="{$Think._IMG}/nologin.gif" class="radius-circle avatar border" />
+                                        {/if}
+                                    </a>
+                                    <div class="user_name text-center">{if empty($userInfo['name'])}{$userInfo.email}{else/}{$userInfo.name}{/if}</div>
+                                    <ul class="drop-menu">
+                                        <li><a href="/member.html">个人中心</a></li>
+                                        <li><a href="/logout.html" onclick="indexAjaxAsk(this);return false;">退出</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    {/if}
+
+                </div>
+                <button class="button icon-navicon float-right" data-target="#nav-link"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layout bg-sred bg-inverse padding-top-bottom padding-small">
+    <div class="container">
+        <div class="x12">
+            <div class="x9">
+                <ul class="nav nav-inline nav-navicon padding-small-top nav-menu" id="nav-link">
+                    <li class="show-l" style="display: none;">
+                        {if empty($userInfo)}
+                        <a href="/login" class="text-big margin-large-top">登录</a>
+                        <a href="/register" class="text-big">注册</a>
+                        {else/}
+
+                                    <a href="#">
+                                        {if !empty($userInfo['avatarPic'])}
+                                        <img src="{$userInfo['avatarPic']}" onerror="this.src='{$Think._IMG}/nologin.gif'" class="radius-circle avatar border" />
+                                        {else/}
+                                        <img src="{$Think._IMG}/nologin.gif" class="radius-circle avatar border" />
+                                        {/if}
+                                    </a>
+                                        <a href="/member.html">个人中心</a>
+                                        <a href="/logout.html" onclick="indexAjaxAsk(this);return false;">退出</a>
+
+
+                        {/if}
+                    </li>
+                    {volist name="nav" id="nav"}
+                    <li><a href="/{$nav.url}" class="text-big">{$nav.title}</a></li>
+                    {/volist}
+                    <li class="show-l" style="display: none;">
+                        <input type="text" class="input margin-little-top" placeholder="请输入关键字"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="x3">
+                <input type="text" class="input margin-little-top hidden-l hidden-s" placeholder="请输入关键字"/>
+            </div>
+        </div>
+    </div>
+</div>

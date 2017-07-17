@@ -1,0 +1,3 @@
+<?php
+//000000000000a:9:{s:7:"picture";a:1:{i:0;s:22:"addons\picture\Picture";}s:12:"pictureMulti";a:1:{i:0;s:32:"addons\picturemulti\PictureMulti";}s:10:"attachment";a:1:{i:0;s:28:"addons\attachment\Attachment";}s:15:"attachmentMulti";a:1:{i:0;s:38:"addons\attachmentmulti\AttachmentMulti";}s:10:"datePicker";a:1:{i:0;s:28:"addons\datepicker\DatePicker";}s:6:"alipay";a:1:{i:0;s:20:"addons\alipay\Alipay";}s:16:"adminArticleEdit";a:1:{i:0;s:36:"addons\editorforadmin\EditorForAdmin";}s:5:"polyv";a:1:{i:0;s:18:"addons\polyv\Polyv";}s:10:"systemInfo";a:1:{i:0;s:28:"addons\systeminfo\SystemInfo";}}
+?>

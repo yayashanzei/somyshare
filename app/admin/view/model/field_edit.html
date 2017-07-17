@@ -1,0 +1,262 @@
+<div class="margin-big-bottom">
+    <h2>{:isset($info['id'])?'编辑':'新增'}字段信息</h2>
+</div>
+
+<div class="tab">
+    <div class="tab-head">
+        {if isset($fieldEnum[50]['_'])}
+        <ul class="tab-nav">
+            {volist name="fieldEnum[50]['_']" id='tab' key='i'}
+                {if($i ==1)}
+                    <li class="active"><a href="#{$tab.name}" onfocus="this.blur()">{$tab.title}</a></li>
+                {else}
+                    <li><a href="#{$tab.name}" onfocus="this.blur()">{$tab.title}</a></li>
+                {/if}
+            {/volist}
+        </ul>
+        {/if}
+    </div>
+    <div class="tab-body">
+        <form action="{:U()}" method="post" class="form-horizontal">
+
+            {if isset($fieldEnum[50]['_'])}
+
+                {volist name="fieldEnum[50]['_']" id='tab' key='i'}
+                    {if($i==1)}
+            <div class="tab-panel active" id="{$tab.name}">
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>字段名 </label><span class="text-gray">(对应表中字段)</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="name" value="{:isset($info.name)?$info.name:''}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>字段标题 </label><span class="text-gray">(表单页面显示的名称)</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="title" value="{:isset($info.title)?$info.title:''}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label" for="field_type">
+                        <label>字段类型 </label><span class="text-gray">（用于表单中的展示方式）</span>
+                    </div>
+                    <div class="field">
+                        <select name="field_type" class="input input-auto button" id="field_type" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[53]['_'])}
+                            {volist name="fieldEnum[53]['_']" id='field'}
+                                <option value="{$field.id}" title="{$field.value}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>字段定义 </label><span class="text-gray">(字段属性的sql表示)</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" id="field_define" name="field_define" value="{:isset($info.field_define)?$info.field_define:''}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>参数 </label><span class="text-gray">(布尔、枚举、多选字段类型的定义数据)</span>
+                    </div>
+                    <div class="field">
+                        <textarea class="input input-auto" rows="5"  name="param" value="{:isset($info.param)?$info.param:''}" ></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>默认值 </label><span class="text-gray">(字段的默认值)</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="field_default" value="{:isset($info.field_default)?$info.field_default:''}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>字段备注 </label><span class="text-gray">(用于表单中的提示)</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="remark" value="{:isset($info.remark)?$info.remark:''}" >
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="label" for="field_group">
+                        <label>字段分组 </label><span class="text-gray">(用于字段显示在表单的那个组中)</span>
+                    </div>
+                    <div class="field">
+                        <select name="field_group" class="input input-auto button" id="field_group" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[72]['_'])}
+                            {volist name="fieldEnum[72]['_']" id='field'}
+                            <option value="{$field.id}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label" for="is_show">
+                        <label>是否显示 </label><span class="text-gray">(是否显示在表单中)</span>
+                    </div>
+                    <div class="field">
+                        <select name="is_show" class="input input-auto button" id="is_show" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[75]['_'])}
+                            {volist name="fieldEnum[75]['_']" id='field'}
+                            <option value="{$field.id}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label" for="is_must">
+                        <label>是否必填 </label><span class="text-gray">(用于自动验证)</span>
+                    </div>
+                    <div class="field">
+                        <select name="is_must" class="input input-auto button" id="is_must" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[102]['_'])}
+                            {volist name="fieldEnum[102]['_']" id='field'}
+                            <option value="{$field.id}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+                    {else}
+
+            <div class="tab-panel" id="{$tab.name}">
+
+                <div class="form-group">
+                    <div class="label" for="validate_type">
+                        <label>验证方式 </label><span class="text-gray"></span>
+                    </div>
+                    <div class="field">
+                        <select name="validate_type" class="input input-auto button" id="validate_type" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[81]['_'])}
+                            {volist name="fieldEnum[81]['_']" id='field'}
+                            <option value="{$field.id}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>验证规则 </label><span class="text-gray">(根据验证方式定义相关验证规则)</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="validate_rule" value="{:isset($info.validate_rule)?$info.validate_rule:''}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>出错提示 </label><span class="text-gray"></span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="error_info" value="{:isset($info.error_info)?$info.error_info:''}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label" for="validate_time">
+                        <label>验证时间 </label><span class="text-gray"></span>
+                    </div>
+                    <div class="field">
+                        <select name="validate_time" class="input input-auto button" id="validate_time" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[86]['_'])}
+                            {volist name="fieldEnum[86]['_']" id='field'}
+                            <option value="{$field.id}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label" for="auto_type">
+                        <label>自动完成方式 </label><span class="text-gray"></span>
+                    </div>
+                    <div class="field">
+                        <select name="auto_type" class="input input-auto button" id="auto_type" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[90]['_'])}
+                            {volist name="fieldEnum[90]['_']" id='field'}
+                            <option value="{$field.id}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>自动完成规则 </label><span class="text-gray">(根据完成方式订阅相关规则)</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="auto_rule" value="{:isset($info.auto_rule)?$info.auto_rule:''}" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label" for="auto_time">
+                        <label>自动完成时间 </label><span class="text-gray"></span>
+                    </div>
+                    <div class="field">
+                        <select name="auto_time" class="input input-auto button" id="auto_time" data-validate="required:请选择,length#>=1:至少选择1项">
+                            {if isset($fieldEnum[94]['_'])}
+                            {volist name="fieldEnum[94]['_']" id='field'}
+                            <option value="{$field.id}">{$field.title}</option>
+                            {/volist}
+                            {/if}
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+                    {/if}
+                {/volist}
+            {/if}
+
+            <div class="form-group">
+                <input type="hidden" name="model_id" value="{$model_id|default=''}">
+                <input type="hidden" name="id" value="{$info.id|default=''}">
+                <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+                <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    selectChange($('#field_type'),$('#field_define'));
+    setValue("field_type", {$info.field_type|default=57 });
+    setValue("field_group", {$info.field_group|default=73 });
+    setValue("is_show", {$info.is_show|default=76 });
+    setValue("is_must", {$info.is_must|default=103 });
+    setValue("validate_type", {$info.validate_type|default=82 });
+    setValue("validate_time", {$info.validate_time|default=87 });
+    setValue("auto_type", {$info.auto_type|default=91 });
+    setValue("auto_time", {$info.auto_time|default=95 });
+</script>

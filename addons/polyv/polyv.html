@@ -1,0 +1,125 @@
+{if(!empty($static_plupload))}
+{$static_plupload}
+{/if}
+
+<div class="form-group">
+    <div class="label">
+        <label>{$pol.title} </label><span class="text-gray"></span>
+    </div>
+    <div class="field">
+        <div id="container_p">
+            <div class="button-group">
+                <input type="hidden" id="vid" name="{$pol.name}" value="{$info.vid}"/>
+                <a class="button input-file" id="video_upload" href="javascript:void(0);">+ 浏览文件</a>
+            </div>
+            <div id="videoInfo" class="margin-top"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>播放次数 </label><span class="text-gray">（视频播放次数）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" id="views" name="views" {if !isset($info.views)}readonly="readonly"{/if} value="{$info.views}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>时长 </label><span class="text-gray">（视频时长）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" id="duration" name="duration" readonly="readonly" value="{$info.duration}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>上传时间 </label><span class="text-gray">（视频上传时间）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" id="create_time" name="create_time" readonly="readonly" value="{if !empty($info.create_time)}{$info.create_time|timeToDate}{/if}">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('#category_id').change(function(){
+        var id= $('#category_id').find("option:selected").val();
+        $.ajax({
+            type:'POST',
+            url:'{:U("getCourse")}',
+            data:{id:id},
+            success:function(data){
+                $('#course').html(data);
+            }
+        });
+
+    });
+
+    var uploaderVideo = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'video_upload',
+        container: document.getElementById('container_p'),
+        url: 'http://v.polyv.net/uc/services/rest?method=uploadfile',
+        multi_selection: false,
+        file_data_name: 'Filedata',
+        flash_swf_url: '{$Think._COMMON}/plupload/Moxie.swf',
+        silverlight_xap_url: '{$Think._COMMON}/plupload/Moxie.xap',
+
+        filters: {
+            max_file_size: '2000MB',
+            prevent_duplicates: true,
+            mime_types: [
+                {title: "Video files", extensions: "avi,wmv,mp4,mp3,mov,flv,mkv,rmvb"}
+            ]
+        },
+        init: {
+            PostInit: function () {
+                $("#videoInfo").html();
+            },
+
+            FilesAdded: function (up, files) {
+                var _option = {
+                    'fcharset': 'ISO-8859-1',
+                    'writetoken': 'bcad4760-3b11-465e-b5d2-89442148e34d',
+                    'cataid': $('#category_id').find("option:selected").attr('cataid'),
+                    'JSONRPC': '{"title": "' + $('#title').val() + '", "tag": "' + $('#tag').val() + '", "desc": "' + $('#description').val() + '"}'
+                };
+
+                this.setOption({multipart_params: _option});
+
+                plupload.each(files, function (file) {
+                    document.getElementById('videoInfo').innerHTML = '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+                    uploaderVideo.start();
+                });
+            },
+
+            UploadProgress: function (up, file) {
+                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+            },
+
+            FileUploaded: function (uploader, file, responseObject) {
+                var response = responseObject.response;
+                var obj = jQuery.parseJSON(response);
+
+                $('#vid').val(obj.data[0].vid);
+                $('#views').val(obj.data[0].times);
+                $('#duration').val(obj.data[0].duration);
+                $('#create_time').val(obj.data[0].ptime);
+            },
+
+            Error: function (up, err) {
+                $('#videoInfo').innerHTML += ("\nError #" + err.code + ": " + err.message);
+            }
+        },
+        multipart_params: {
+            'fcharset': 'ISO-8859-1',
+            'writetoken': 'bcad4760-3b11-465e-b5d2-89442148e34d',
+            'cataid': '1',
+            'JSONRPC': '{"title": "标题", "tag": "标签", "desc": "描述"}'
+        }
+    });
+
+    uploaderVideo.init();
+
+</script>

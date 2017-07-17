@@ -1,0 +1,177 @@
+{include file="public/header" /}
+
+<div class="login x12">
+    <div class="login_bg"><img src="{$Think._IMG}/reg_bg.jpg" class="bg_img"/></div>
+
+    <div class="fadein-top login_box x4 x4-move bg-white radius-big ">
+
+        <div class="x10 x1-move margin-large-top padding-top padding-bottom">
+
+            <form method="post" class="form form-block">
+
+                <div class="form-group margin-bottom">
+                    <div class="label">
+                        <label for="email">邮箱 </label>
+                    </div>
+                    <div class="field clearfix">
+                        <input type="text" class="input" id="email" name="email" size="50" data-validate="required:　@_@email:邮件格式不正确"
+                               placeholder="邮箱" tabindex="1"/>
+                    </div>
+                </div>
+                <div class="form-group margin-bottom">
+                    <div class="label">
+                        <label for="password">密码 </label>
+                    </div>
+                    <div class="field clearfix">
+                        <input type="password" class="input" id="password" name="password" size="50"
+                               data-validate="{literal}required:　@_@regexp#(?!^\\S+$).{6,}:密码格式有误(正确格式：至少6位){/literal}"
+                               placeholder="请设置密码" tabindex="2"/>
+
+                        <div id="level" class="pw-strength x6-move">
+                            <div class="pw-bar"></div>
+                            <div class="pw-bar-on"></div>
+                            <div class="pw-txt">
+                                <span>弱</span>
+                                <span>中</span>
+                                <span>强</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group margin-big-bottom">
+                    <div class="label">
+                        <label for="verify">验证码</label>
+                    </div>
+                    <div class="field clearfix">
+                        <div class="x12">
+                            <input type="text" class="input" style="width:60%;float: left;" id="verify" name="verify"
+                                   placeholder="请填入验证码" tabindex="3"
+                                   data-validate="{literal}required:　@_@regexp#(?!^\\S+$).{4}:验证码必须4位{/literal}"/>
+                            <img class="verifyimg reloadverify x4" src="{:U('index/Verify/index')}" alt="切换验证码" title="切换验证码"
+                                 style="cursor: pointer;width:100px;height:34px;display:block;float:left;margin-left:15px;vertical-align: middle;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-button margin-big-bottom margin-big-top text-center">
+                    <a class="button button-big register_button x6 bg-red margin-large-bottom" href="{:U('register')}" tabindex="4"
+                       onclick="return false;">注　册</a>
+
+                    <div class="x6 text-center height-large text-gray">
+                        已有帐号 立即
+                        <a class="text-big text-green" href="{:U('/login')}" tabindex="4">登陆</a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+
+    $(function () {
+
+
+        $('.login').animate({'height': $('.login_bg').height()}, 500);
+
+        var interval = setInterval(function () {
+            if (parseInt($('.login').height()) < 250) {
+                $('.login').stop(true).animate({'height': $('.login_bg').height()}, 500);
+            } else {
+                clearInterval(interval);
+            }
+        }, 500);
+
+        $('.login_box').animate({'opacity': '.9'}, 500,function(){
+            var _offset = $('.login_box').height()+$('.login_box').offset().top;
+            if($('.login_bg').height()<_offset){
+                $('.login_bg').find('img').height(_offset);
+                $('.login').height(_offset);
+            }
+        });
+
+        $('.login_box').hover(
+                function () {
+                    $(this).stop(true).animate({'opacity': '1'}, 300);
+                },
+                function () {
+                    $(this).stop(true).animate({'opacity': '.9'}, 300);
+                }
+        );
+
+        $("body").keydown(function (event) {
+            if (event.keyCode == "13") {
+                $('.register_button').click();
+            }
+        });
+
+        if ($('.adi_h_nav').length > 0) {
+            window.location.reload();
+        }
+        var verifyimg = $(".verifyimg").attr("src");
+
+        $(".reloadverify").click(function () {
+            if (verifyimg.indexOf('?') > 0) {
+                $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
+            } else {
+                $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+            }
+        });
+
+        $(".register_button").click(function () {
+            var register = $(this)[0];
+            $(".form-block").ajaxSubmit(function () {
+                indexAjaxAsk(register, {type: 'post', form: 'form-block'});
+            });
+        });
+
+        $('#password').keyup(function () {
+            if ($(this).val().length < 6) {
+                $('#level').hide();
+            } else {
+                $('#level').show();
+                $(this).siblings('.input-help').hide();
+                var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+                var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+                var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+
+                if (false == enoughRegex.test($(this).val())) {
+                    $('#level').removeClass('pw-weak');
+                    $('#level').removeClass('pw-medium');
+                    $('#level').removeClass('pw-strong');
+                    $('#level').addClass(' pw-defule');
+                    //密码小于六位的时候，密码强度图片都为灰色
+                } else if (strongRegex.test($(this).val())) {
+                    $('#level').removeClass('pw-weak');
+                    $('#level').removeClass('pw-medium');
+                    $('#level').removeClass('pw-strong');
+                    $('#level').addClass(' pw-strong');
+                    //密码为八位及以上并且字母数字特殊字符三项都包括,强度最强
+                } else if (mediumRegex.test($(this).val())) {
+                    $('#level').removeClass('pw-weak');
+                    $('#level').removeClass('pw-medium');
+                    $('#level').removeClass('pw-strong');
+                    $('#level').addClass(' pw-medium');
+                    //密码为七位及以上并且字母、数字、特殊字符三项中有两项，强度是中等
+                } else {
+                    $('#level').removeClass('pw-weak');
+                    $('#level').removeClass('pw-medium');
+                    $('#level').removeClass('pw-strong');
+                    $('#level').addClass('pw-weak');
+                    //如果密码为6为及以下，就算字母、数字、特殊字符三项都包括，强度也是弱的
+                }
+            }
+            return true;
+        });
+
+
+    });
+</script>
+
+{include file="public/footer" /}
+
+

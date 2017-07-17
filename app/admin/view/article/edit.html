@@ -1,0 +1,138 @@
+<div class="margin-big-bottom">
+    <h2>{:isset($info['id'])?'编辑':'新增'}</h2>
+</div>
+
+<form class="form-horizontal">
+
+    <div class="tab">
+        <div class="tab-head">
+            {if isset($fieldEnum[72]['_'])}
+            <ul class="tab-nav">
+                {volist name="fieldEnum[72]['_']" id='tab' key='i'}
+                {if($i ==1)}
+                <li class="active"><a href="#{$tab.name}" onfocus="this.blur()">{$tab.title}</a></li>
+                {else}
+                <li><a href="#{$tab.name}" onfocus="this.blur()">{$tab.title}</a></li>
+                {/if}
+                {/volist}
+            </ul>
+            {/if}
+        </div>
+        <div class="tab-body">
+            {if isset($fieldEnum[72]['_'])}
+
+            {volist name="fieldEnum[72]['_']" id='tab' key='i'}
+            {if($i==1)}
+            <div class="tab-panel active" id="{$tab.name}">
+                {else/}
+                <div class="tab-panel" id="{$tab.name}">
+                    {/if}
+                        <div class="form-group">
+                            <div class="label">
+                                <label>上级菜单 </label><span class="text-gray">（所属的上级菜单）</span>
+                            </div>
+                            <div class="field">
+                                <select name="category_id" id="category_id" class="input input-auto" style="width:433px;">
+                                    {volist name="catInfo" id="cif"}
+                                    <option value="{$cif.id}" cataid="{$cif.cataid}" {if !empty($info.category_id) && $info.category_id eq $cif.id }selected="selected"{/if}>{$cif.title_show}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="field" id="course">
+                                {if !empty($info.cid)}
+                                    {$info.cid|getCourseHtml}
+                                {/if}
+                            </div>
+                        </div>
+
+                        {if !empty($field)}
+                        {volist name='field' id='fd'}
+                        {if ($fd['field_group'] == $tab['id'])}
+                        {switch name="$fd.field_type"}
+                        {case value='58' break='1'}
+                        <div class="form-group">
+                            <div class="label">
+                                <label>{$fd.title} </label><span class="text-gray">{if(!empty($fd.remark))}（{$fd.remark}）{/if}</span>
+                            </div>
+                            <div class="field">
+                                <input type="text" class="input input-auto" size="60" id="{$fd.name}" name="{$fd.name}" value="{$info[$fd.name]|default=''}">
+                            </div>
+                        </div>
+                        {/case}
+
+                        {case value='57' break='1'}
+                        <div class="form-group">
+                            <div class="label">
+                                <label>{$fd.title} </label><span class="text-gray">{if(!empty($fd.remark))}（{$fd.remark}）{/if}</span>
+                            </div>
+                            <div class="field">
+                                <input type="text" class="input input-auto" size="60" id="{$fd.name}" name="{$fd.name}" value="{$info[$fd.name]|default=''}">
+                            </div>
+                        </div>
+                        {/case}
+
+                        {case value='137' break='1'}
+                        <div class="form-group">
+                            <div class="label">
+                                <label>{$fd.title} </label><span class="text-gray">{if(!empty($fd.remark))}（{$fd.remark}）{/if}</span>
+                            </div>
+                            <div class="field">
+                                <textarea class="input input-auto" cols="57" rows="3" id="{$fd.name}" name="{$fd.name}" >{$info[$fd.name]|default=''}</textarea>
+                            </div>
+                        </div>
+                        {/case}
+
+                        {case value='59' break='1'}
+                        <div class="form-group">
+                            <div class="label">
+                                <label>{$fd.title} </label><span class="text-gray">{if(!empty($fd.remark))}（{$fd.remark}）{/if}</span>
+                            </div>
+                            <div class="field">
+                                <textarea class="input input-auto" cols="57" rows="3" id="{$fd.name}" name="{$fd.name}" >{$info[$fd.name]|default=''}</textarea>
+                            </div>
+                        </div>
+                        {/case}
+
+                        {case value='68' break='1'}
+                        {:hook('picture',array( 'title' => $fd['title'], 'name' => $fd['name'], 'cover' => (empty($info['cover'])?'':$info['cover']) ))}
+                        {/case}
+
+                        {case value='60' break='1'}
+                        {:hook('datePicker',array( 'type' => 2, 'title' => $fd['title'], 'name' => $fd['name'], 'create_time' => (empty($info['create_time'])?'':$info['create_time']) ))}
+                        {/case}
+
+                        {case value='135' break='1'}
+                        {:hook('polyv',array( 'title' => $fd['title'], 'name' => $fd['name'] ))}
+                        {/case}
+
+                        {case value='66' break='1'}
+                        {:hook('adminArticleEdit',array( 'title' => $fd['title'], 'name' => $fd['name'], 'content' => (empty($info[$fd['name']])?'':$info[$fd['name']]) ))}
+                        {/case}
+                        {/switch}
+                        {/if}
+                        {/volist}
+                        {/if}
+
+                    </div>
+
+            {/volist}
+            {/if}
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <input type="hidden" name="id" value="{$info.id|default=''}">
+        <input type="hidden" name="tid" value="{$category.id|default=''}">
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" href="{:U()}"
+           onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right"
+           href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回
+        </a>
+    </div>
+
+</form>

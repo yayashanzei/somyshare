@@ -1,0 +1,41 @@
+{include file="public/header" /}
+
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            <ul class="list-group">
+            {volist name="videoCate" id="cate"}
+                <li class="text-default"><strong><a href="/course/{$cate.id}" >{$cate.title}</a></strong></li>
+                {if !empty($cate['_'])}
+                {volist name="cate['_']" id="child"}
+                <li><span class="float-right badge">{$child.id|getCourseByCate}</span><a href="/course/{$child.id}" class="padding-big-left">{$child.title}</a> </li>
+                {/volist}
+                {/if}
+            {/volist}
+            </ul>
+        </div>
+        <div class="x9 course-list">
+            <ul class="list-unstyle margin-large-left margin-large-right">
+            {volist name="course" id="c" empty="暂时没有数据" }
+                <li class="x3 x1-move float-left">
+                    <a href="/learn/{$c.id}" >
+                    <div class="course-list-img">
+                        <img class="x12 border" src="{$c.cover|getCover}" alt="{$c.title}" style="height:135px" />
+                    </div>
+                    <h5>
+                        <span class="">{$c.title}</span>
+                    </h5>
+                    <div class="tips">
+                        <p>{$c.intro}</p>
+                    </div>
+                    </a>
+                </li>
+            {/volist}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

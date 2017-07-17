@@ -1,0 +1,161 @@
+<div class="margin-big-bottom">
+    <h2>{:isset($info['uid'])?'编辑':'新增'}用户信息</h2>
+</div>
+
+<form class="form-horizontal">
+
+    {if (isset($info['uid'])) }
+    <div class="form-group">
+        <div class="label">
+            <label>用户UID </label><span class="text-gray">（用户的唯一标识）</span>
+        </div>
+        <div class="field">
+            <span class="input input-auto bg">{$info.uid}</span>
+        </div>
+    </div>
+    {/if}
+
+    <div class="form-group">
+        <div class="label">
+            <label>用户昵称 </label><span class="text-gray"></span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="name" value="{:isset($info.name)?$info.name:''}" {:isset($info['uid'])?'disabled="disabled"':''}>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label" for="group">
+            <label>用户组 </label><span class="text-gray">（至少选择1项）</span>
+        </div>
+        <div class="field">
+            <select class="input input-auto button" id="group" name="groupid" data-validate="required:请选择,length#>=1:至少选择1项">
+                {volist name='userGroup' id='ug'}
+                <option value="{$ug.id}"> {$ug.group_name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    {if (isset($info['uid'])) }
+    <div class="form-group">
+        <div class="label">
+            <label>旧密码 </label><span class="text-gray">（用户当前密码）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="oldPassword" value="">
+        </div>
+    </div>
+    {/if}
+
+    <div class="form-group">
+        <div class="label">
+            <label>{:isset($info['uid'])?'新':''}密码 </label><span class="text-gray">（将要修改为的密码,无需修改请留空）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="password" value="">
+        </div>
+    </div>
+
+    {if (!isset($info['uid'])) }
+    <div class="form-group">
+        <div class="label">
+            <label>确认密码 </label><span class="text-gray">（将要修改为的密码,无需修改请留空）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="confirmPassword" value="">
+        </div>
+    </div>
+    {/if}
+
+    {if (!isset($info['uid'])) }
+    <div class="form-group">
+        <div class="label">
+            <label>加密字符 </label><span class="text-gray">（必须是英文四位字符）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="salt" value="">
+        </div>
+    </div>
+    {/if}
+
+    <div class="form-group button-group radio">
+        <div class="label">
+            <label>性别 </label><span class="text-gray"></span>
+        </div>
+        <label class="button">
+            <input name="sex" value="0" type="radio"><span class="icon icon-check"></span> 男
+        </label>
+        <label class="button">
+            <input name="sex" value="1" type="radio"><span class="icon icon-check"></span> 女
+        </label>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>联系人 </label><span class="text-gray">（无需修改请留空）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="linkman" value="{:isset($info.linkman)?$info.linkman:''}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>公司名称 </label><span class="text-gray">（无需修改请留空）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="company" value="{:isset($info.company)?$info.company:''}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label" for="scale">
+            <label>公司规模 </label><span class="text-gray">（至少选择1项）</span>
+        </div>
+        <div class="field">
+            <select name="scale" class="input input-auto button" id="scale" data-validate="required:请选择,length#>=1:至少选择1项">
+                <option value="0"> 0 - 30 人</option>
+                <option value="1"> 30 - 60 人</option>
+                <option value="2"> 60 - 100 人</option>
+                <option value="3"> 100 - 200 人</option>
+                <option value="4"> 200 - 500 人</option>
+                <option value="5"> 500 - 1000 人</option>
+                <option value="6"> 1000 - 10000 人</option>
+                <option value="7"> 万人以上</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>地址 </label><span class="text-gray"></span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="address" value="{:isset($info.address)?$info.address:''}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>行业 </label><span class="text-gray"></span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="trade" value="{:isset($info.trade)?$info.trade:''}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" name="uid" value="{$info.uid|default=''}">
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" href="{:U()}"
+           onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right"
+           href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回
+        </a>
+    </div>
+</form>
+<script type="text/javascript">
+    $("input[type=radio][name=sex][value=" + {$info.sex|default= '0'}+"]").attr("checked", 'checked').parent('.button').addClass('active');
+    setValue("scale", {$info.scale|default= 0});
+    setValue("groupid", {$info.groupid|default= 0});
+</script>

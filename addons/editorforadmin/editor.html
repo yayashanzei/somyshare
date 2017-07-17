@@ -1,0 +1,45 @@
+{if(!empty($static_ueditor))}
+{$static_ueditor}
+{/if}
+
+<div class="form-group">
+    <div class="label">
+        <label>{$edit.title} </label><span class="text-gray"></span>
+    </div>
+    <div class="field" style="z-index:0">
+        <input type="hidden" name="{$edit.name}_value" id="{$edit.name}_value" value="" />
+        <input type="hidden" name="{$edit.name}"  id="{$edit.name}" value="{if !empty($edit.content.id)}{$edit.content.id}{/if}" />
+        <script id="ue_{$edit.name}" type="text/plain" style="height:400px;width:100%;">{if !empty($edit.content.content)}{$edit.content.content}{/if}</script>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var ue_{$edit.name} = UE.getEditor('ue_{$edit.name}',{
+        toolbars: [
+            [
+                'fullscreen', 'source', '|', 'undo', 'redo', '|',
+                'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+                'directionalityltr', 'directionalityrtl', 'indent', '|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+                'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                'simpleupload', 'insertimage', 'insertvideo', 'music', 'attachment', 'insertframe', 'insertcode', 'pagebreak',  '|',
+                'horizontal', 'spechars','wordimage', '|',
+                'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', '|',
+                'searchreplace','preview'
+            ]
+        ],
+        enableAutoSave: false,
+        autoHeightEnabled: true,
+    });
+
+
+    ue_{$edit.name}.ready(function() {
+        ue_{$edit.name}.addListener('contentChange', function () {
+            var {$edit.name} = ue_{$edit.name}.getContent();
+            $('#{$edit.name}_value').val({$edit.name});
+        });
+    });
+</script>

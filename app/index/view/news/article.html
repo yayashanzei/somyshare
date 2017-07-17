@@ -1,0 +1,33 @@
+{include file="public/header" /}
+
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            <ul class="list-group">
+                {volist name="newsCate" id="cate"}
+                <li class="text-default"><strong><a href="/news/{$cate.id}" class="padding-big-left">{$cate.title}</a></strong></li>
+                {if !empty($cate['_'])}
+                {volist name="cate['_']" id="child"}
+                <li><span class="float-right badge">0</span><a href="/news/{$child.id}" class="padding-big-left">{$child.title}</a> </li>
+                {/volist}
+                {/if}
+                {/volist}
+            </ul>
+        </div>
+        <div class="x9">
+            <div class="margin-large-bottom">
+                <h3 class="text-center">{$article.title}</h3>
+                <div class="text-center margin-top">
+                    <span>浏览次数：{$article.views} 发布时间：{$article.create_time|timeToDate}</span>
+                </div>
+            </div>
+            <div class="margin-large-top margin-large-left margin-large-right">
+                {$article.content|getContent}
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

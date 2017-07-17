@@ -1,0 +1,71 @@
+﻿    <div class="margin-big-bottom">
+        <h2>{:isset($info['id'])?'编辑':'新增'}导航</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-group">
+            <div class="label">
+                <label>导航标题 </label><span class="text-gray">（用于显示的文字）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" name="title" size="60" value="{$nav.title|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>导航地址 </label><span class="text-gray">（用于跳转的URL）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="url" value="{$nav.url|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>是否外链 </label><span class="text-gray">（用于设置外部链接）</span>
+            </div>
+            <div class="button-group radio">
+                <label class="button">
+                    <input name="target" value="1"  type="radio"><span class="icon icon-check"></span> 是
+                </label>
+                <label class="button active">
+                    <input name="target" value="0" checked="checked" type="radio"><span class="icon icon-times"></span> 否
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>排序 </label><span class="text-gray">（设置显示前后顺序）</span>
+            </div>
+            <div class="field">
+                <input class="input input-auto" type="text" size="3" name="sort" value="{$nav.sort|default=0}" >
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>分类ID </label><span class="text-gray">（设置顶级分类ID）</span>
+            </div>
+            <div class="field">
+                <input class="input input-auto" type="text" size="3" name="cid" value="{$nav.cid|default=0}" >
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>图标 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="icon" value="{$info.icon|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>导航颜色 </label><span class="text-gray">（设置导航文字颜色）</span>
+            </div>
+            <div class="field">
+                <input class="input input-auto" type="text" size="" name="color" value="{$nav.color|default=''}" >
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+            <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+        </div>
+    </form>

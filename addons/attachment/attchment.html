@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    var attchment = '';
+    $(function() {
+        $('#file_upload').uploadify({
+            'swf' : '{$Think._COMMON}/uploadify/uploadify.swf',
+            'uploader' : '{:U("attchmentOne")}',
+            'buttonText' : '上传附件',
+            'multi' : false,
+            'auto' : true,
+            'onUploadSuccess' : function(file, data, response) {
+                attchment ="<a width = '200px' href = '"+data+"' target='_blank'>"+data+"</a>";
+                $("#attchments").html(attchment);
+            },
+            'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+                alert('The file ' + file.name + ' could not be uploaded: ' + errorString);
+            }
+        });
+    });
+</script>
+<div class="form-group">
+    <div class="field">
+        <input id="file_upload" name="file_upload" type="file">
+    </div>
+    <div id="attchments"></div>
+</div>

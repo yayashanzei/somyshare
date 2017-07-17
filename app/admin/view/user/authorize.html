@@ -1,0 +1,93 @@
+<div class="margin-big-bottom">
+    <h2>授权管理</h2>
+</div>
+
+<form class="form-horizontal">
+
+    {if !empty($menu) }
+
+    {volist name='menu' id='pr'}
+    {if $pr.pid == $auth_group and $pr.pid != 0}
+    <div class="form-group margin-large-bottom border border-mix radius ">
+
+        <div class=" label bg padding-small margin-bottom text-blackblue border-bottom radius border-mix">
+            <input name="rules[]" type="checkbox" value="{$pr.id}"  <?php echo isset($groupAuth[$pr['id']]) ? 'checked="checked"' : ''; ?> class="pr margin-small-right">
+            <span class="h5"><strong>{$pr.title}</strong></span>
+        </div>
+
+        {volist name='menu' id='ch'}
+        {if $ch.pid == $pr.id}
+        <div class="margin-big-left padding-small-top">
+
+            <div class="label text-green ch-box">
+                <input name="rules[]" type="checkbox" value="{$ch.id}" <?php echo isset($groupAuth[$ch['id']]) ? 'checked="checked"' : ''; ?> class="ch margin-small-right">
+                <span class="h5"><strong>{$ch.title}</strong></span>
+            </div>
+
+            <div class="margin-big-left gr-box">
+            {volist name='menu' id='gr' key='i'}
+                {if $gr.pid == $ch.id}
+                <label class=" padding-small-right">
+                    <input name="rules[]" type="checkbox" value="{$gr.id}" <?php echo isset($groupAuth[$gr['id']]) ? 'checked="checked"' : ''; ?> class="gr margin-small-right">
+                    <span class="text-justify">{$gr.title}<span class="text-gray">({$gr.group})</span></span>
+                </label>
+                {/if}
+            {/volist}
+            </div>
+
+        </div>
+        {/if}
+        {/volist}
+
+    </div>
+    {/if}
+    {/volist}
+
+    {if !empty($cate)}
+    <div class="form-group margin-large-bottom border border-mix radius ">
+
+        <div class=" label bg padding-small margin-bottom text-blackblue border-bottom radius border-mix">
+             <span class="h5"><strong>模块（顶级分类）管理</strong></span>
+        </div>
+
+        {volist name='cate' id='ct'}
+
+        <div class="margin-big-left padding-small-top">
+
+            <div class="label text-green ch-box">
+                <input name="rules[]" type="checkbox" value="{$ct.id}" <?php echo isset($groupAuth[$ct['id']]) ? 'checked="checked"' : ''; ?> class="ch margin-small-right">
+                <span class="h5"><strong>{$ct.title}</strong></span>
+            </div>
+
+        </div>
+
+        {/volist}
+
+    </div>
+    {/if}
+
+    <input type="hidden" name="group_id" value="{$group_id}">
+    <input type="hidden" name="auth_group" value="{$auth_group}">
+    {else/}
+    <div class="alert alert-yellow margin-big-bottom">
+        <span class="close rotate-hover"></span>aO,没有要管理的权限！</div>
+    {/if}
+
+    <div class="form-group">
+        <!--<input type="hidden" name="uid" value="{$info.uid|default=''}">-->
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" href="{:U()}"
+           onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right"
+           href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回
+        </a>
+    </div>
+</form>
+<script type="text/javascript">
+    $('.pr').click(function(){
+        $(this).closest('.form-group').find('input').prop('checked',this.checked);
+    });
+
+    $('.ch').click(function(){
+        $(this).closest('.ch-box').siblings('.gr-box').find('input').prop('checked',this.checked);
+    });
+</script>

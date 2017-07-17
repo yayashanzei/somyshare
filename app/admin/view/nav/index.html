@@ -1,0 +1,59 @@
+﻿    <div class="margin-big-bottom">
+        <h2>导航管理 </h2>
+    </div>
+
+    <div class="cf">
+        <a class="button bg-main radius-none margin-bottom" href="{:U('add')}" onclick="adminAjaxAsk(this);return false;">新 增</a>
+        <a class="button bg-main radius-none margin-bottom" href="{:U('del')}" onclick="adminAjaxAsk(this,{ask:0,form:'ids',type:'post',layer:{ btn:['确定','取消'],content:'确定删除吗？'}});return false;">删 除</a>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids form-small">
+            <input type="hidden" name="mod" id="module" value="{$Think.MODULE_NAME}">
+            <input type="hidden" name="con" id="controller" value="{$Think.CONTROLLER_NAME}">
+            <table class="table table-striped">
+                <thead>
+                <tr class="bg-blackblue bg-inverse">
+                    <th class="row-selected">
+                        <input class="check-head" type="checkbox">
+                    </th>
+                    <th>ID</th>
+                    <th>导航名称</th>
+                    <th>导航地址</th>
+                    <th>是否外链</th>
+                    <th>排序</th>
+                    <th>分类ID</th>
+                    <th>导航颜色</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="nav"}
+                        <tr>
+                            <td><input class="check-item" type="checkbox" name="id[]" value="{$nav.id}"></td>
+                            <td>{$nav.id}</td>
+                            <td>{$nav.title}</td>
+                            <td>{$nav.url}</td>
+                            <td>{$nav.target}</td>
+                            <td width="160"><input class="input input-auto" type="text" size="3" name="sort_{$nav['id']}" value="{$nav.sort|default=0}" onchange="input_change_v({$nav['id']},this);return false;"><span class="edit_msg"></span></td>
+                            <td>{$nav.cid}</td>
+                            <td>{$nav.color}</td>
+                            <td>
+                                <a title="编辑" href="{:U('edit?id='.$nav['id'])}" onclick="adminAjaxAsk(this);return false;">编辑</a>
+                                <a title="禁用" href="/" >禁用</a>
+                                <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$nav['id'])}" onclick="adminAjaxAsk(this,{ask:0,layer:{title:'操作提示',content:'确定要执行该操作吗？',btn: ['确定', '取消']}});return false;">删除</a>
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+                {/notempty}
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>

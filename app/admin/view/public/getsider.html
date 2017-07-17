@@ -1,0 +1,19 @@
+{if !empty($sider['_'])}
+    <div class="info">
+        {volist name="sider['_']" id="sids"}
+
+            <div class="info_lst_t pie">{$sids.title}
+                <div class="info_lst_t_ico {$sids.icon}"></div>
+                <div class="info_lst_t_ico2 icon-angle-down"></div>
+            </div>
+            {if !empty($sids['_'])}
+                {volist name="sids['_']" id="sid"}
+                        <div class="info_lst">
+                            <a href='{:U($sid.url)}' data-id="{$sid.id}" data-group="{$sid.group}" onclick="adminAjaxAsk(this);return false;">{$sid.title}</a>
+                        </div>
+                {/volist}
+
+            {/if}
+        {/volist}
+    </div>
+{/if}

@@ -1,0 +1,92 @@
+
+<div class="tab">
+    <div class="tab-head">
+        <ul class="tab-nav">
+            <li class="active"><a href="#tab-base" onfocus="this.blur()">基 础</a></li>
+            <li><a href="#tab-high" onfocus="this.blur()">高 级</a></li>
+        </ul>
+    </div>
+    <div class="tab-body">
+        <form class="form-horizontal">
+            <div class="tab-panel active" id="tab-base">
+                <div class="form-group">
+                    <div class="label" for="model">
+                        <label>课程所属分类 </label><span class="text-gray">（选择课程所属的分类）</span>
+                    </div>
+                    <div class="field">
+                        <select name="category_id" id="category_id" class="input input-auto" style="width:433px;">
+                            {volist name="videoCate" id="v"}
+                            <option value="{$v.id}" {if !empty($info.category_id) && $info.category_id eq $v.id }selected="selected"{/if}>{$v.title_show}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>课程主题 </label><span class="text-gray">（主题不能为空）</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" name="title" size="60" value="{$course.title|default=''}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>关键词 </label><span class="text-gray">（课程关键词）</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" name="keywords" size="60" value="{$course.keywords|default=''}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label">
+                        <label>课程介绍 </label><span class="text-gray">（一句话介绍（15字以内））</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" name="intro" size="60" value="{$course.intro|default=''}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="label">
+                        <label>课程描述 </label><span class="text-gray">（课程内容的描述）</span>
+                    </div>
+                    <div class="field">
+                        <textarea rows="5" class="input" name="description" placeholder="请输入课程描述" style="width:600px;">{$course.description|default=''}</textarea>
+                    </div>
+                </div>
+
+                {:hook('picture',array( 'title' => '课程封面', 'name' => 'cover', 'cover' => (empty($info['cover'])?'':$info['cover']) ))}
+
+                {:hook('datePicker',array( 'type' => 2, 'title' => '创建时间', 'name' => 'create_time', 'create_time' => (empty($info['create_time'])?'':$info['create_time']) ))}
+
+            </div>
+            <div class="tab-panel" id="tab-high">
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>视频 </label><span class="text-gray">（课程下的视频）</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="60" name="vids" value="{$course.vids|default=''}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">
+                        <label>排序 </label><span class="text-gray">（仅对当前层级分类有效）</span>
+                    </div>
+                    <div class="field">
+                        <input type="text" class="input input-auto" size="20" name="sort" value="{$course.sort|default=1}">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="id" value="{$course.id|default=''}">
+                <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U()}?type={$type}" onclick="indexAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+            </div>
+        </form>
+    </div>
+</div>

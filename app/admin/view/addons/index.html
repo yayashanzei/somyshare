@@ -1,0 +1,55 @@
+﻿    <div class="margin-big-bottom">
+        <h2>插件列表 </h2>
+    </div>
+
+    <div class="cf">
+        <a class="button bg-main radius-none margin-bottom" href="{:U('create')}" onclick="adminAjaxAsk(this);return false;">创建插件</a>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids form-small">
+            <input type="hidden" name="mod" id="module" value="{$Think.MODULE_NAME}">
+            <input type="hidden" name="con" id="controller" value="{$Think.CONTROLLER_NAME}">
+            <table class="table table-striped">
+                <thead>
+                <tr class="bg-blackblue bg-inverse">
+                    <th width="10%">插件名称</th>
+                    <th width="10%">插件标识</th>
+                    <th width="50%">插件描述</th>
+                    <th width="10%">状态</th>
+                    <th width="20%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="addons"}
+                        <tr>
+                            <td>{$addons.title}</td>
+                            <td>{$addons.name}</td>
+                            <td>{$addons.description}</td>
+                            <td>{$addons.status}</td>
+                            <td>
+                                {eq name="addons.status" value="未安装"}
+                                    <a title="安装" href="{:U('install?name='.$addons['name'])}" onclick="adminAjaxAsk(this);return false;">安装</a>
+                                {else/}
+                                    {eq name="addons.has_config" value ="1" }
+                                    <a title="设置" href="{:U('config?name='.$addons['name'])}" onclick="adminAjaxAsk(this);return false;">设置</a>
+                                    {/eq}
+                                    {eq name="addons.status" value="启用"}
+                                    <a title="禁用" href="{:U('disable?name='.$addons['name'])}" onclick="adminAjaxAsk(this);return false;">禁用</a>
+                                    {else/}
+                                    <a title="启用" href="{:U('enable?name='.$addons['name'])}" onclick="adminAjaxAsk(this);return false;">启用</a>
+                                    {/eq}
+                                    <a class="confirm ajax-get" title="卸载" href="{:U('uninstall?name='.$addons['name'])}" onclick="adminAjaxAsk(this,{ask:0,layer:{title:'操作提示',content:'确定要执行该操作吗？',btn: ['确定', '取消']}});return false;">卸载</a>
+                                {/eq}
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+                {/notempty}
+                </tbody>
+            </table>
+        </form>
+        <div class="page"></div>
+    </div>

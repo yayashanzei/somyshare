@@ -1,0 +1,52 @@
+﻿    <div class="margin-big-bottom">
+        <h2>钩子列表 </h2>
+    </div>
+
+    <div class="cf">
+        <a class="button bg-main radius-none margin-bottom" href="{:U('add')}" onclick="adminAjaxAsk(this);return false;">新 增</a>
+        <a class="button bg-main radius-none margin-bottom" href="{:U('del')}" onclick="adminAjaxAsk(this,{ask:0,form:'ids',type:'post',layer:{ btn:['确定','取消'],content:'确定删除吗？'}});return false;">删 除</a>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids form-small">
+            <input type="hidden" name="mod" id="module" value="{$Think.MODULE_NAME}">
+            <input type="hidden" name="con" id="controller" value="{$Think.CONTROLLER_NAME}">
+            <table class="table table-striped">
+                <thead>
+                <tr class="bg-blackblue bg-inverse">
+                    <th class="row-selected">
+                        <input class="check-head" type="checkbox">
+                    </th>
+                    <th>ID</th>
+                    <th>钩子名称</th>
+                    <th>钩子描述</th>
+                    <th>钩子类型</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="nav"}
+                        <tr>
+                            <td><input class="check-item" type="checkbox" name="id[]" value="{$nav.id}"></td>
+                            <td>{$nav.id}</td>
+                            <td>{$nav.name}</td>
+                            <td>{$nav.description}</td>
+                            <td>{$nav.type}</td>
+                            <td>
+                                <a title="编辑" href="{:U('edit?id='.$nav['id'])}" onclick="adminAjaxAsk(this);return false;">编辑</a>
+                                <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$nav['id'])}" onclick="adminAjaxAsk(this,{ask:0,layer:{title:'操作提示',content:'确定要执行该操作吗？',btn: ['确定', '取消']}});return false;">删除</a>
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+                {/notempty}
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>

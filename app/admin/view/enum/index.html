@@ -1,0 +1,61 @@
+﻿    <div class="margin-big-bottom">
+        <h2>枚举管理 </h2>
+    </div>
+
+    <div class="cf">
+        <a class="button bg-main margin-bottom" href="{:U('add',array('pid'=>I('get.pid',0)))}" onfocus="this.blur()"  onclick="adminAjaxAsk(this);return false;">新 增</a>
+        <a class="button bg-main radius-none margin-bottom" href="{:U('del')}" onfocus="this.blur()" onclick="adminAjaxAsk(this,{ask:0,form:'ids',type:'post',layer:{ btn:['确定','取消'],content:'确定删除吗？'}});return false;">删 除</a>
+        <a class="button bg-main margin-bottom" href="{:U('updateCache')}" onfocus="this.blur()" onclick="adminAjaxAsk(this);return false;">更新缓存</a>
+        <!-- 当前位置 -->
+        <div class="float-right">
+            <div style="margin-top:15px">当前位置：{$pos} </div>
+        </div>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids form-small">
+            <input type="hidden" name="mod" id="module" value="{$Think.MODULE_NAME}">
+            <input type="hidden" name="con" id="controller" value="{$Think.CONTROLLER_NAME}">
+            <table class="table table-striped">
+                <thead>
+                <tr class="bg-blackblue bg-inverse">
+                    <th class="row-selected">
+                        <input class="check-head" type="checkbox">
+                    </th>
+                    <th>ID</th>
+                    <th>枚举组名</th>
+                    <th>缓存组名</th>
+                    <th>排序</th>
+                    <th>系统</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="config"}
+                        <tr>
+                            <td><input class="check-item" type="checkbox" name="id[]" value="{$config.id}"></td>
+                            <td>{$config.id}</td>
+                            <td>
+                                <a href="{:U('index?pid='.$config['id'])}" onclick="adminAjaxAsk(this);return false;">{$config.title}</a>
+                            </td>
+                            <td>{$config.name}</td>
+                            <td width="160"><input class="input input-auto" type="text" size="3" name="sort_{$config['id']}" value="{$config.sort|default=0}" onchange="fieldUpdate(this);return false;"><span class="edit_msg"></span></td>
+                            <td>{$config.issystem == 1 ? '是' : '否'}</td>
+                            <td>
+                                <a title="编辑" href="{:U('edit?id='.$config['id'])}" onclick="adminAjaxAsk(this);return false;">编辑</a>
+                                <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$config['id'])}" onclick="adminAjaxAsk(this,{ask:0,layer:{title:'操作提示',content:'确定要执行该操作吗？',btn: ['确定', '取消']}});return false;">删除</a>
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+                {/notempty}
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>

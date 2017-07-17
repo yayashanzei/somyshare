@@ -1,0 +1,124 @@
+{if(!empty($static_dragsort))}
+{$static_dragsort}
+{/if}
+
+<div class="margin-big-bottom">
+    <h2>模型设计</h2>
+</div>
+
+<form class="form-horizontal">
+
+    <input type="hidden" name="id" value="{$model_id|default=''}">
+
+    {if (!empty($model_id)) }
+    <div class="form-group">
+        <div class="label">
+            <label>模型ID </label><span class="text-gray">（模型的唯一标识）</span>
+        </div>
+        <div class="field">
+            <span class="input input-auto bg">{$model_id}</span>
+        </div>
+    </div>
+    {/if}
+
+    <div class="form-group margin-big-bottom">
+        <div class="label">
+            <label>基础字段</label><span class="text-gray">（可供选择的一些常用字段）</span>
+        </div>
+        <div class="field">
+            {volist name='$base' id='bs'}
+            <div class="button-group margin-small-right">
+                <span class="button">{$bs.title}</span>
+                <button type="button" class="button dropdown-toggle">
+                    <span class="downward"></span>
+                </button>
+                <ul class="drop-menu">
+                    <li><a href="{:U('fieldAdd?model='.$model_id.'&id='.$bs.id)}"
+                           onclick="adminAjaxAsk(this);$('body').trigger('click');return false;">添加</a></li>
+                    <li><a href="{:U('fieldDel?model='.$model_id.'&name='.$bs.name)}"
+                           onclick="adminAjaxAsk(this,{ask:0,layer:{ title:'字段删除提示',btn:['确定','取消'],content:'确定删除当前模型（非基础模型）中所对应的该字段吗？' }});$('body').trigger('click');return false;">删除</a>
+                    </li>
+                </ul>
+            </div>
+            {/volist}
+        </div>
+    </div>
+
+
+    <div class="form-group margin-big-bottom sort_box">
+        <div class="label">
+            <label>表单显示排序</label><span class="text-gray">（直接拖动进行排序）</span>
+        </div>
+        <div class="field">
+            <div class="x12" id="sort_list">
+
+                {if isset($fieldEnum[72]['_'])}
+                {volist name="fieldEnum[72]['_']" id='field' key='k'}
+                <div class="panel margin-small-right x3 sort_group" title="{$field.id}">
+
+                    <div class="panel-head bg-gray bg-inverse">{$field.title}</div>
+
+                    <div class="panel-body sort_body">
+                        <ul class="list-unstyle height-big" id="list{$k}">
+                            {if (isset($info[$field['id']]))}
+                            {volist name="info[$field['id']]" id="in"}
+                            <li class="margin-small-bottom bg-whitesmoke padding-left padding-right radius">
+                                <div title="{$in.id}" class="">{$in.title}
+                                    <span class="text-gray">[{$in.name}]</span>
+                                </div>
+                            </li>
+                            {/volist}
+                            {/if}
+                        </ul>
+                    </div>
+                </div>
+
+                {/volist}
+                {/if}
+
+
+                <input name="listSortOrder" type="hidden"/>
+
+                <script type="text/javascript">
+                    saveOrder();
+                    $("#sort_list").find('ul').dragsort({
+                        dragSelector: "div",
+                        dragBetween: true,
+                        dragEnd: saveOrder,
+                        placeHolderTemplate: "<li class='border-mix border-dashed border margin-small-bottom padding-left padding-right'><div>　</div></li>"
+                    });
+
+                    function saveOrder() {
+                        var data = new Array();
+                        $('.sort_group').each(function () {
+                            var _this = $(this);
+                            data.push(
+                                    _this.find('li').map(function () {
+                                        return $(this).children().attr('title') +'-'+ _this.attr('title');
+                                    }).get()
+                            );
+                        });
+
+                        $("input[name=listSortOrder]").val(data.join(","));
+                    }
+                </script>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" href="{:U()}"
+           onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right"
+           href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回
+        </a>
+    </div>
+
+</form>
+

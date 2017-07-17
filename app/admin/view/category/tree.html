@@ -1,0 +1,30 @@
+{volist name="tree" id="list"}
+	<dl class="cate-item">
+		<dt class="border-bottom clearfix">
+			<form action="{:U('edit')}" method="post">
+				<div class="opt-btn">
+					<a title="编辑" href="{:U('edit?id='.$list['id'].'&pid='.$list['pid'])}" onclick="adminAjaxAsk(this);return false;">编辑</a>
+					<a title="{$list.status|show_status_op}" href="{:U('setStatus?ids='.$list['id'].'&status='.abs(1-$list['status']))}" class="ajax-get">{$list.status|show_status_op}</a>
+					<a title="删除" href="{:U('remove?id='.$list['id'])}" class="confirm ajax-get" onclick="adminAjaxAsk(this,{ask:0,layer:{title:'操作提示',content:'确定要执行该操作吗？',btn: ['确定', '取消']}});return false;">删除</a>
+				</div>
+				<div class="fold"><span class=""></span></div>
+				<div class="order"><input type="text" name="sort" class="text input-mini" value="{$list.sort}"></div>
+				<div class="order">{$list['allow_publish']?'是':'否'}</div>
+				<div class="name">
+					<span class="tab-sign"></span>
+					<input type="hidden" name="id" value="{$list.id}">
+					<input type="text" name="title" class="text" value="{$list.title}">
+					<a class="add-sub-cate" title="添加子分类" href="{:U('add?pid='.$list['id'])}" onclick="adminAjaxAsk(this);return false;" >
+                        <span class="icon-plus-circle margin-small-left"></span>
+					</a>
+					<span class="help-inline msg"></span>
+				</div>
+			</form>
+		</dt>
+		{notempty name="list['_']"}
+			<dd>
+				{:R('Category/tree', array($list['_']))}
+			</dd>
+		{/notempty}
+	</dl>
+{/volist}

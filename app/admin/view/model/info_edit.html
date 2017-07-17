@@ -1,0 +1,78 @@
+<div class="margin-big-bottom">
+    <h2>{:isset($info['id'])?'编辑':'新增'}模型信息</h2>
+</div>
+
+<form class="form-horizontal">
+
+    {if (isset($info['id'])) }
+    <div class="form-group">
+        <div class="label">
+            <label>模型ID </label><span class="text-gray">（模型的唯一标识）</span>
+        </div>
+        <div class="field">
+            <span class="input input-auto bg">{$info.id}</span>
+        </div>
+    </div>
+    {/if}
+
+    <div class="form-group">
+        <div class="label">
+            <label>模型名称 </label><span class="text-gray"></span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="title" value="{:isset($info.title)?$info.title:''}" {:isset($info['uid'])?'disabled="disabled"':''}>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>模型标识 </label><span class="text-gray">(用于生成表时作为表名)</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="name" value="{:isset($info.name)?$info.name:''}" {:isset($info['uid'])?'disabled="disabled"':''}>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label" for="engine_type">
+            <label>模型引擎 </label><span class="text-gray">（数据表的引擎）</span>
+        </div>
+        <div class="field">
+            <select class="input input-auto button" id="engine_type" name="engine_type" data-validate="required:请选择,length#>=1:至少选择1项">
+                {if isset($fieldEnum[108]['_'])}
+                {volist name="fieldEnum[108]['_']" id='field'}
+                <option value="{$field.id}">{$field.title}</option>
+                {/volist}
+                {/if}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label" for="need_pk">
+            <label>是否需要主键 </label><span class="text-gray">（选“是”则会新建默认的id字段作为主键）</span>
+        </div>
+        <div class="field">
+            <select class="input input-auto button" id="need_pk" name="need_pk" data-validate="required:请选择,length#>=1:至少选择1项">
+                {if isset($fieldEnum[111]['_'])}
+                {volist name="fieldEnum[111]['_']" id='field'}
+                <option value="{$field.id}">{$field.title}</option>
+                {/volist}
+                {/if}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" name="id" value="{$info.id|default=''}">
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" href="{:U()}"
+           onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right"
+           href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回
+        </a>
+    </div>
+</form>
+<script type="text/javascript">
+    setValue("engine_type", {$info.engine_type|default= 109});
+    setValue("need_pk", {$info.need_pk|default=112 });
+</script>

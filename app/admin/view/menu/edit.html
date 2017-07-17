@@ -1,0 +1,132 @@
+﻿    <div class="margin-big-bottom">
+        <h2>{:isset($info['id'])?'编辑':'新增'}后台菜单</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-group">
+            <div class="label">
+                <label>标题 </label><span class="text-gray">（用于后台显示的配置标题）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" name="title" size="60" value="{$info.title|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>排序 </label><span class="text-gray">（用于分组显示的顺序）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="20" name="sort" value="{$info.sort|default=0}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>链接 </label><span class="text-gray">（U函数解析的URL或者外链）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="url" value="{$info.url|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>上级菜单 </label><span class="text-gray">（所属的上级菜单）</span>
+            </div>
+            <div class="field">
+                <select name="pid" id="pid" class="input input-auto" style="width:433px;">
+                    {volist name="Menus" id="menu"}
+                        <option value="{$menu.id}">{$menu.title_show}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>图标 </label><span class="text-gray">（目前仅限于拼图图标）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="icon" value="{$info.icon|default=''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label">
+                <label>GET参数 </label><span class="text-gray">（用于get请求的一些特殊参数）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="get_param" value="{$info.get_param|default=''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label">
+                <label>AJAX参数 </label><span class="text-gray">（用于ajax请求的一些特殊参数）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="ajax_param" value="{$info.ajax_param|default=''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label" for="group">
+                <label>分组 </label><span class="text-gray">（用于按钮显示位置）</span>
+            </div>
+            <div class="field">
+                <select name="group" class="input input-auto button" id="group" data-validate="required:请选择,length#>=1:至少选择1项">
+                    {volist name="group" id="gp"}
+                    <option value="{$gp.value}">{$gp.title}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label" for="auth_group">
+                <label>权限分组 </label><span class="text-gray">（用于辨别所属的权限组）</span>
+            </div>
+            <div class="field">
+                <select name="auth_group" class="input input-auto button" id="auth_group" data-validate="required:请选择,length#>=1:至少选择1项">
+                    {volist name="authGroup" id="auth"}
+                        <option value="{$auth.id}">{$auth.title}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label">
+                <label>是否隐藏 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <label><input type="radio" name="hide" value="1"> 是</label>
+                <label><input type="radio" name="hide" class="margin-left" value="0"> 否</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>仅开发者模式可见 </label><span class="text-gray"></span>
+            </div>
+            <div class="field">
+                <label><input type="radio" name="is_dev" value="1"> 是</label>
+                <label><input type="radio" name="is_dev" class="margin-left" value="0"> 否</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>说明 </label><span class="text-gray">（菜单详细说明）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="tip" value="{$info.tip|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <a class="button bg-green padding-large-left padding-large-right" id="submit" data-id="r-d" type="submit" target-form="form-horizontal" href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+            <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" data-id="r-d" href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $("input[type=radio][name=hide][value=" + {$info.hide|default='0'} + "]").attr("checked",'checked');
+        $("input[type=radio][name=is_dev][value=" + {$info.is_dev|default='0'} + "]").attr("checked",'checked');
+        setValue("pid", {$info.pid|default= 0});
+        setValue("auth_group", {$info.auth_group|default= 0});
+        setValue("group", {$info.group|default= 0});
+    </script>

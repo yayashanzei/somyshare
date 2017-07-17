@@ -1,0 +1,73 @@
+
+{if(!empty($static_plupload))}
+{$static_plupload}
+{/if}
+
+<div class="form-group">
+    <div class="label">
+        <label>{$pic.title} </label><span class="text-gray"></span>
+    </div>
+    <div class="field">
+        <div id="container">
+            <div class="button-group">
+                <input type="hidden"  id="cover" name="{$pic.name}" value="{$pic.cover}" />
+                <a class="button input-file" id="pickfiles" href="javascript:void(0);">+ 浏览文件</a>
+            </div>
+            <div id="picInfo" class="margin-top"></div>
+            <div id="imgSrc">{if !empty($pic.cover)}<img src="{$pic.cover|getCover}" width = "200"  class = "margin-top" />{/if}</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Custom example logic
+
+    var uploaderPic = new plupload.Uploader({
+        runtimes : 'html5,flash,silverlight,html4',
+        browse_button : 'pickfiles',
+        container: document.getElementById('container'),
+        url : '{:U("uploadOne")}',
+        multi_selection : false,
+        chunk_size : '4096kb',
+        flash_swf_url : '{$Think._COMMON}/plupload/Moxie.swf',
+        silverlight_xap_url : '{$Think._COMMON}/plupload/Moxie.xap',
+
+        filters : {
+            max_file_size : '2mb',
+            mime_types: [
+                {title : "Image files", extensions : "jpg,gif,png"}
+            ]
+        },
+
+        init: {
+            PostInit: function() {
+                $("#picInfo").html();
+            },
+
+            FilesAdded: function(up, files) {
+                plupload.each(files, function(file) {
+                    document.getElementById('picInfo').innerHTML = '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+                    uploaderPic.start();
+                });
+            },
+
+            UploadProgress: function(up, file) {
+                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+            },
+
+            FileUploaded: function (uploader,file,responseObject){
+                var response = responseObject.response;
+                var result = response.split(",");
+                $('#cover').val(result[0]);
+                $('#imgSrc').html('<img src=' + result[1] + ' width = 200  class = margin-top />');
+            },
+
+            Error: function(up, err) {
+                document.getElementById('console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+            }
+        }
+    });
+
+    uploaderPic.init();
+
+</script>

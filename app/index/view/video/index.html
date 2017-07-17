@@ -1,0 +1,29 @@
+{include file="public/header" /}
+<script src="https://player.polyv.net/script/polyvplayer.min.js"></script>
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x12">
+            <p>外贸视频 \ SNS社交营销 \ 全新的Facebook \ 测试分类视频</p>
+            <p class="text-big margin-top">{$video.title}</p>
+        </div>
+        <div class="x12">
+            <div class="x9">
+                <div id="somy_{$video.vid}"></div>
+                <script>
+                    var player = polyvObject('#somy_{$video.vid}').videoPlayer({
+                        'width':'100%',
+                        'height':'490',
+                        'vid' : '{$video.vid}'
+                    });
+                </script>
+            </div>
+            <div class="x3 bg-black" style="height: 490px">
+                <h5 class="text-white margin-big-top margin-large-left"><span class="icon-list"></span> 视频目录</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

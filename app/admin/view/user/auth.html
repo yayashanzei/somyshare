@@ -1,0 +1,63 @@
+<div class="margin-big-bottom">
+    <h2>权限组管理 </h2>
+</div>
+
+<div class="cf">
+    <a class="button bg-main radius-none margin-bottom" href="{:U('authAdd')}" onclick="adminAjaxAsk(this);return false;">新 增</a>
+    <a class="button bg-main radius-none margin-bottom" href="{:U( 'authEnable')}"
+       onclick="adminAjaxAsk(this,{ask:0,form:'infoForm',type:'post',layer:{ btn:['确定','取消'],content:'确定启用吗？' } });return false;">启 用</a>
+    <a class="button bg-main radius-none margin-bottom" href="{:U('authDisable')}"
+       onclick="adminAjaxAsk(this,{ask:0,form:'infoForm',type:'post',layer:{ btn:['确定','取消'],content:'确定禁用吗？' } });return false;">禁 用</a>
+    <a class="button bg-main radius-none margin-bottom" href="{:U('authDel')}"
+       onclick="adminAjaxAsk(this,{ask:0,form:'infoForm',type:'post',layer:{ btn:['确定','取消'],content:'确定删除吗？' } });return false;">删 除</a>
+    <!-- 高级搜索 -->
+    <div class="float-right">
+        <div class="sleft">
+            <input type="text" name="title" class="search-input" value="{:I('title')}" placeholder="请输入菜单名称">
+            <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="data-table table-striped">
+    <form class="infoForm">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr class="bg-blackblue bg-inverse">
+                <th>
+                    <input class="check-head" type="checkbox">
+                </th>
+                <th>权限组</th>
+                <th>描述</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if $authGroup != ''}
+            {volist name="authGroup" id="agp"}
+            <tr>
+                <td><input class="check-item" type="checkbox" name="id[]" value="{$agp.id}"></td>
+                <td>{$agp.title}</td>
+                <td>{$agp.remark}</td>
+                <td>{$agp.status}</td>
+                <td>
+                    <a title="编辑" href="{:U('authEdit?id='.$agp['id'] )}" onclick="adminAjaxAsk(this);return false;">编辑</a>
+                    <a title="删除" href="{:U('authDel?id='.$agp['id'])}"
+                       onclick="adminAjaxAsk(this,{ask:0,layer:{title:'操作提示',content:'确定要执行该操作吗？',btn: ['确定', '取消']}});return false;">删除</a>
+                </td>
+            </tr>
+            {/volist}
+            {else}
+            <td colspan="10" class="text-center"> aOh! 暂时还没有内容!</td>
+            {/if}
+
+            </tbody>
+        </table>
+    </form>
+    <!-- 分页 -->
+    <div class="page">
+
+    </div>
+</div>
+

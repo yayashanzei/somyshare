@@ -1,0 +1,46 @@
+{include file="public/header" /}
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            <div class="clearfix">
+                <h4 class="">视频分享</h4>
+                <ul class="list-unstyle margin-top ">
+                    {volist name="newMember" id="member"}
+                    <li class="border-bottom border-dotted height-big"><span class="float-right badge margin-small-top margin-large-right">{$member.uid}</span>{$member.name}</li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="clearfix margin-large-top">
+                <h4>干货分享</h4>
+                <ul class="list-unstyle margin-top">
+                    {volist name="newMember" id="member"}
+                    <li class="border-bottom border-dotted height-big"><span class="float-right badge margin-small-top margin-large-right">{$member.uid}</span>{$member.name}</li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="x9 padding-large-left">
+            <div class="margin-large-bottom">
+                {volist name="share" id="s"}
+                <ul class="list-media list-underline">
+                    <li>
+                        <div class="media media-x">
+                            <a class="float-left" href="#">
+                                <img class="radius-circle" width="45" height="45" src="{$s.uid|getUserAvatar}" alt="" />
+                            </a>
+                            <div class="media-body">
+                                <strong><a href="{$s.url}" target="_blank">{$s.title}</a></strong>
+                                {$s.uid|getUserBase} 分享了 <a href="{$s.url}" target="_blank">{$s.title}</a> 的{$s.type}。 {$s.create_time|timeToDate}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

@@ -1,0 +1,86 @@
+﻿    <div class="margin-big-bottom">
+        <h2>{:isset($info['id'])?'编辑':'新增'}配置</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-group">
+            <div class="label">
+                <label>配置标识 </label><span class="text-gray">（用于C函数调用，只能使用英文且不能重复）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" name="ckey" size="60" value="{$config.ckey|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>配置标题 </label><span class="text-gray">（用于后台显示的配置标题）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="20" name="title" value="{$config.title|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>排序 </label><span class="text-gray">（用于分组显示的顺序）</span>
+            </div>
+            <div class="field">
+                <input class="input input-auto" type="text" size="3" name="sort" value="{$config.sort|default=0}" >
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>配置类型 </label><span class="text-gray">（系统会根据不同类型解析配置值）</span>
+            </div>
+            <div class="field">
+                <select name="type" class="input input-auto" style="width:433px;">
+                    {volist name="type" id="t"}
+                    <option value="{$t.id}">{$t.title}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>配置分组 </label><span class="text-gray">（配置分组 用于批量设置 不分组则不会显示在系统设置中）</span>
+            </div>
+            <div class="field">
+                <select name="group" class="input input-auto" style="width:433px;">
+                    {volist name="group" id="g"}
+                    <option value="{$g.id}">{$g.title}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>枚举值 </label><span class="text-gray">（枚举值）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="eid" value="{$config.eid|default=0}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>配置值 </label><span class="text-gray">（配置值）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="cvalue" value="{$config.cvalue|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>说明 </label><span class="text-gray">（配置说明）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="remark" value="{$config.remark|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$config.id|default=''}">
+            <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+            <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+        </div>
+    </form>
+    <script type="text/javascript">
+        setValue("group",{$config.group|default=0});
+        setValue("type",{$config.type|default=0});
+    </script>

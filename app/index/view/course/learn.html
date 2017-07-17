@@ -1,0 +1,53 @@
+{include file="public/header" /}
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x12 clearfix">
+            <p>外贸视频 \ SNS社交营销 \ 全新的Facebook</p>
+        </div>
+        <div class="clearfix">
+            <div class="x4">
+                <img src="{$course.cover|getCover}" style="" class="img-responsive"/>
+            </div>
+            <div class="x7 x1-move clearfix">
+                <h3 class="margin-large-bottom">{$course.title}</h3>
+                <div class="">
+                    <span class="margin-right">观看费用：免费</span>
+                    <span class="margin-right">总课时：2节</span>
+                    <span class="margin-right">学习人数：99</span>
+                    <span class="margin-right">观看次数：9999</span>
+                </div>
+                <div class="margin-top height">课程简介：{$course.description}</div>
+            </div>
+        </div>
+        <div class="x9 learn-list float-left margin-large-top">
+            <h3>课程目录</h3>
+            <ul class="list-unstyle margin-big-top">
+                {volist name="video" id="v"}
+                <li class="x5 margin-large-right float-left margin-large-bottom">
+                    <a href="/video/{$v.id}" >
+                        <div class="learn-list-img">
+                            <img class="x12 border" src="{$v.cover|getCover}" alt="{$v.title}" style="height:145px" />
+                        </div>
+                        <h5>
+                            <span class="padding-left">{$v.title}</span>
+                        </h5>
+                        <div class="tips">
+                            <p class="padding-left"><span class="float-right padding-right">时长：{$v.duration}</span>浏览次数：{$v.views}</p>
+                            <p class="padding-left">标签：{$v.tag}</p>
+                        </div>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+        <div class="x3 margin-large-top">
+            <h3>达人介绍</h3>
+            <div class="margin-top">达人：{$course.uid|getUserBase}</div>
+            <div class="height">介绍：{$course.teacher}</div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

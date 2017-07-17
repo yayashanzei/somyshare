@@ -1,0 +1,32 @@
+{include file="public/header" /}
+<div class="layout">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            <ul class="list-group">
+                {volist name="singleCate" id="cate"}
+                <li class="text-default"><strong><a href="/about/{$cate.name}" class="padding-big-left">{$cate.title}</a></strong></li>
+                {if !empty($cate['_'])}
+                    {volist name="cate['_']" id="child"}
+                        <li><span class="float-right badge">0</span><a href="/about/{$child.name}" class="padding-big-left">{$child.title}</a> </li>
+                    {/volist}
+                {/if}
+                {/volist}
+            </ul>
+        </div>
+        <div class="x9">
+            <div class="margin-large-bottom">
+                <h3 class="text-center">{$single.title}</h3>
+                <div class="text-center margin-top">
+                    <span>浏览次数：{$single.views}次&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：{$single.create_time|timeToDate}</span>
+                </div>
+            </div>
+            <div class="margin-large-top margin-large-left margin-large-right">
+                {$single.content|getContent}
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

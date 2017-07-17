@@ -1,0 +1,56 @@
+﻿<div class="margin-big-bottom">
+    <h2>回收站</h2>
+</div>
+
+<div class="cf">
+    {if !empty($buttons['_'])}
+    {volist name="buttons['_']" id='bt'}
+    {if $bt.group ==3}
+    <a class="button bg-main radius-none margin-bottom" data-id="{$bt.id}" data-group="{$bt.group}" title="{$bt.title}" href="{:U($bt.url)}" onclick="adminAjaxAsk(this{$bt.ajax_param ? ','.$bt.ajax_param:''});return false;">{$bt.title}</a>
+    {/if}
+    {/volist}
+    {/if}
+</div>
+
+<div class="data-table table-striped">
+    <form class="ids form-small">
+        <input type="hidden" name="mod" id="module" value="{$Think.MODULE_NAME}">
+        <input type="hidden" name="con" id="controller" value="{$Think.CONTROLLER_NAME}">
+        <table class="table table-striped">
+            <thead>
+            <tr class="bg-blackblue bg-inverse">
+                <th class="row-selected">
+                    <input class="check-head" type="checkbox">
+                </th>
+                <th>编号</th>
+                <th>标题</th>
+                <th>分类</th>
+                <th>删除时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="list"}
+            {volist name="list" id="recycle"}
+            <tr>
+                <td><input class="check-item" type="checkbox" name="id[]" value="{$recycle.id}_{$recycle.model}"></td>
+                <td>{$recycle.id}</td>
+                <td>{$recycle.title}</td>
+                <td>{$recycle.category_id|cateFieldbyId}</td>
+                <td></td>
+                <td>
+                    <a title="还原" href="{:U('restore?model='.$recycle.model.'&id='.$recycle['id'])}" onclick="adminAjaxAsk(this);return false;">还原</a>
+                </td>
+            </tr>
+            {/volist}
+            {else/}
+            <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+            {/notempty}
+            </tbody>
+        </table>
+    </form>
+    <!-- 分页 -->
+    <div class="page">
+
+    </div>
+</div>

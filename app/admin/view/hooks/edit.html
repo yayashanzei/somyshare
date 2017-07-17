@@ -1,0 +1,98 @@
+﻿{if(!empty($static_dragsort))}
+{$static_dragsort}
+{/if}
+
+<div class="margin-big-bottom">
+    <h2>{:isset($info['id'])?'编辑':'新增'}钩子</h2>
+</div>
+<form action="{:U()}" method="post" class="form-horizontal">
+    <div class="form-group">
+        <div class="label">
+            <label>钩子名称 </label><span class="text-gray">（需要在程序中先添加钩子，否则无效）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" name="name" size="60" value="{$hook_info.name|default=''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>钩子描述 </label><span class="text-gray">（钩子的描述信息）</span>
+        </div>
+        <div class="field">
+            <textarea rows="5" class="input" name="description" placeholder=""
+                      style="width:600px;">{$hook_info.description|default=''}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>钩子类型 </label><span class="text-gray">（区分钩子的主要用途）</span>
+        </div>
+        <div class="field">
+            <select name="type" class="input input-auto" style="width:433px;">
+                {volist name="hook_type" id="ht"}
+                <option value="{$ht.id}">{$ht.title}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    {notempty name="info['id']"}
+    <div class="form-group x12">
+        <div class="label">
+            <label>钩子挂载的插件排序 </label><span class="text-gray">（拖动后保存顺序，影响同一个钩子挂载的插件执行先后顺序）</span>
+        </div>
+        <div class="field x4 height-big" id="sort_list">
+            {empty name="hook_info.addons"}
+            暂无插件，无法排序
+            {else /}
+            <ul class="list-unstyle">
+                {volist name="hook_info.addons" id="a"}
+                <li class="border radius padding-left bg" value="{$a}"><span class="icon icon-times float-right padding-right"></span>{$a}
+                </li>
+                {/volist}
+            </ul>
+            {/empty}
+            <input type="hidden" name="addons" value="{$hook_addons}">
+        </div>
+    </div>
+    {/notempty}
+
+    <div class="form-group">
+        <input type="hidden" name="id" value="{$hook_info.id|default=''}">
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal"
+           href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}"
+           onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    setValue("type", {$hook_info.type |
+    default
+    = 0
+    })
+    ;
+
+    $("#sort_list").find('span').click(function () {
+        $(this).parent().remove();
+        saveSort();
+    });
+
+    $("#sort_list").find('ul').dragsort({
+        dragSelector: "li",
+        dragBetween: false,
+        dragEnd: saveSort,
+        placeHolderTemplate: "<li></li>"
+    });
+
+    function saveSort() {
+        var data = new Array();
+        $("#sort_list").find('li').each(function () {
+            data.push($(this).text());
+        });
+
+        $("input[name=addons]").val(data.join(","));
+    }
+</script>

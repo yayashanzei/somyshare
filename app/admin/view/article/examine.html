@@ -1,0 +1,54 @@
+﻿<div class="margin-big-bottom">
+    <h2>待审核</h2>
+</div>
+
+<div class="cf">
+    <a class="button bg-main radius-none margin-bottom" href="{:U('del')}" onclick="adminAjaxAsk(this,{ask:0,form:'ids',type:'post',layer:{ btn:['确定','取消'],content:'确定删除吗？'}});return false;">删 除</a>
+    <a class="button bg-main radius-none margin-bottom" href="{:U('del')}" onclick="adminAjaxAsk(this,{ask:0,form:'ids',type:'post',layer:{ btn:['确定','取消'],content:'确定删除吗？'}});return false;">审 核</a>
+</div>
+
+<div class="data-table table-striped">
+    <form class="ids form-small">
+        <input type="hidden" name="mod" id="module" value="{$Think.MODULE_NAME}">
+        <input type="hidden" name="con" id="controller" value="{$Think.CONTROLLER_NAME}">
+        <table class="table table-striped">
+            <thead>
+            <tr class="bg-blackblue bg-inverse">
+                <th class="row-selected">
+                    <input class="check-head" type="checkbox">
+                </th>
+                <th>编号</th>
+                <th>标题</th>
+                <th>类型</th>
+                <th>分类</th>
+                <th>最后更新</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {notempty name="list"}
+            {volist name="list" id="draft"}
+            <tr>
+                <td><input class="check-item" type="checkbox" name="id[]" value="{$draft.id}"></td>
+                <td>{$draft.id}</td>
+                <td>{$draft.title}</td>
+                <td>{$draft.model}</td>
+                <td>{$draft.cate}</td>
+                <td>{$draft.update_time}</td>
+                <td>
+                    <a title="编辑" href="{:U('edit?id='.$draft['id'])}" onclick="adminAjaxAsk(this);return false;">编辑</a>
+                    <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$draft['id'])}" onclick="adminAjaxAsk(this,{ask:0,layer:{title:'操作提示',content:'确定要执行该操作吗？',btn: ['确定', '取消']}});return false;">删除</a>
+                </td>
+            </tr>
+            {/volist}
+            {else/}
+            <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+            {/notempty}
+            </tbody>
+        </table>
+    </form>
+    <!-- 分页 -->
+    <div class="page">
+
+    </div>
+</div>

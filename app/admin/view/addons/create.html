@@ -1,0 +1,147 @@
+﻿<div class="margin-big-bottom">
+    <h2>创建插件</h2>
+</div>
+<form id="form" action="{:U()}" method="post" class="form-horizontal">
+    <div class="form-group">
+        <div class="label">
+            <label>标识名 </label><span class="text-gray">（请输入插件标识）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" name="name" size="60">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>插件名 </label><span class="text-gray">（请输入插件名）</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="title">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>插件描述 </label><span class="text-gray">（请输入描述）</span>
+        </div>
+        <div class="field">
+            <textarea rows="5" class="input" name="description" placeholder="" style="width:600px;"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>安装后是否启用 </label>
+        </div>
+        <div class="field">
+            <input type="checkbox" name="status" value="1" checked>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>是否需要配置 </label>
+        </div>
+        <div class="field">
+            <input type="checkbox" id="has_config" name="has_config" value="1">
+                <textarea rows="9" class="input has_config margin-top hidden" name="config" style="width:660px;">
+&lt;?php
+return array(
+    //这只是个例子，根据插件需要设置配置项
+    'title'=>array(//配置在表单中的键名
+        'title'=>'标题:', //表单的文字
+        'type'=>'text',	//表单的类型：text、textarea、checkbox、radio、select等
+        'value'=>'我是标题',	//表单的默认值
+    ),
+    'intro'=>array(//配置在表单中的键名
+        'title'=>'介绍:', //表单的文字
+        'type'=>'textarea',	//表单的类型：text、textarea、checkbox、radio、select等
+        'value'=>'我是文本域',	//表单的默认值
+    ),
+    'like'=>array(//配置在表单中的键名
+        'title'=>'有什么爱好:', //表单的文字
+        'type'=>'checkbox',	//表单的类型：text、textarea、checkbox、radio、select等
+        'options'=>array(	//select 和radion、checkbox的子选项
+            '0'=>'旅游',		//值=>文字
+            '1'=>'看电影',
+        ),
+        'value'=>'0',	//表单的默认值
+    ),
+    'work'=>array(//配置在表单中的键名
+        'title'=>'想不想工作:', //表单的文字
+        'type'=>'radio',	//表单的类型：text、textarea、checkbox、radio、select等
+        'options'=>array(	//select 和radion、checkbox的子选项
+            '1'=>'想',		//值=>文字
+            '0'=>'不想',
+        ),
+        'value'=>'1',	//表单的默认值
+    ),
+    'type'=>array(//配置在表单中的键名
+        'title'=>'想要什么样的工作:', //表单的文字
+        'type'=>'select',	//表单的类型：text、textarea、checkbox、radio、select等
+        'options'=>array(	//select 和radion、checkbox的子选项
+            '1'=>'程序员',		//值=>文字
+            '0'=>'设计师',
+        ),
+        'value'=>'1',	//表单的默认值
+    ),
+);
+				</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>是否需要外部访问 </label>
+        </div>
+        <div class="field">
+            <input type="checkbox" name="has_outurl" value="1">
+        </div>
+    </div>
+    <div class="form-group  x12">
+        <div class="label">
+            <label>选择挂载点 </label>
+        </div>
+        <div class="field  button-group checkbox x4">
+            {volist name="hook_list" id="hl"}
+            <label class="button x12">
+                <input name="hook[]" value="{$hl.id}" type="checkbox"><span class="icon icon-check"></span> {$hl.name}
+            </label>
+            {/volist}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="label">
+            <label>是否需要后台列表 </label>
+        </div>
+        <div class="field">
+            <input type="checkbox" id="has_adminlist" name="has_adminlist" value="1">勾选，扩展里已装插件后台列表会出现插件名的列表菜单
+				<textarea rows="9" class="input has_adminlist margin-top hidden" name="admin_list" style="width:660px;">
+        'model'=>'Example',	  //要查的表
+        'fields'=>'*',		  //要查的字段
+        'map'=>'',		 //查询条件, 如果需要可以再插件类的构造方法里动态重置这个属性
+        'order'=>'id desc',	  //排序,
+        'list_grid'=>array(   //这里定义的是除了id序号外的表格里字段显示的表头名和模型一样支持函数和链接
+            'cover_id|preview_pic:封面',
+            'title:书名',
+            'description:描述',
+            'link_id|get_link:外链',
+            'update_time|time_format:更新时间',
+            'id:操作:[EDIT]|编辑,[DELETE]|删除'
+        ),
+				</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal"
+           href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}"
+           onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+    </div>
+</form>
+<script type="text/javascript">
+    function bindShow(radio_bind, selectors) {
+        $(radio_bind).click(function () {
+            $(selectors).toggleClass('hidden');
+        })
+    }
+
+    //配置的动态
+    bindShow('#has_config', '.has_config');
+    bindShow('#has_adminlist', '.has_adminlist');
+</script>

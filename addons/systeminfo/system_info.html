@@ -1,0 +1,73 @@
+{if !empty($config.data_display.value)}
+<div class="x{$config.data_width.value} x{$config.data_move.value}-move">
+
+    <div class="bg pdding-top-bottom padding text-big text-main  border-mix border-bottom border-small">
+        <strong>{$config.data_title.value}</strong></div>
+
+    <div class="sys-info margin-big-bottom">
+        <table class="table table-bordered">
+            <tr>
+                <td>文章</td>
+                {php}
+                $system_info_article = M()->query("select count(id) as v from disk_article");
+                {/php}
+                <td>{$system_info_article[0]['v']}</td>
+            </tr>
+            <tr>
+                <td>视频</td>
+                {php}
+                $system_info_video = M()->query("select count(id) as v from disk_video");
+                {/php}
+                <td>{$system_info_video[0]['v']}</td>
+            </tr>
+            <tr>
+                <td>用户</td>
+                {php}
+                $system_info_user = M()->query("select count(uid) as v from disk_user");
+                {/php}
+                <td>{$system_info_user[0]['v']}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+{/if}
+
+{if !empty($config.sys_display.value)}
+<div class="x{$config.sys_width.value} x{$config.sys_move.value}-move">
+
+    <div class="bg pdding-top-bottom padding text-big text-main  border-mix border-bottom border-small">
+        <strong>{$config.sys_title.value}</strong></div>
+
+    <div class="sys-info">
+        <table class="table table-bordered">
+            <tr>
+                <td>服务器操作系统</td>
+                <td>{$Think.const.PHP_OS}</td>
+            </tr>
+            <tr>
+                <td>ThinkPHP版本</td>
+                <td>{$Think.THINK_VERSION}</td>
+            </tr>
+            <tr>
+                <td>运行环境</td>
+                <td>{$_SERVER['SERVER_SOFTWARE']}</td>
+            </tr>
+            <tr>
+                <td>MYSQL版本</td>
+                {php}
+                $system_info_mysql = M()->query("select version() as v");
+                {/php}
+                <td>{$system_info_mysql[0]['v']}</td>
+            </tr>
+            <tr>
+                <td>上传限制</td>
+                <td>{:ini_get('upload_max_filesize')}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+{/if}
+
+

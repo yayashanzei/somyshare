@@ -1,0 +1,43 @@
+{include file="public/header" /}
+<script type="text/javascript" charset="utf-8" src="{$Think._COMMON}/plupload/plupload.full.min.js"></script>
+
+<div class="layout min-height">
+    <div class="container margin-large-top margin-large-bottom">
+        <div class="x3">
+            {include file="member/left" /}
+        </div>
+
+        <div class="x9">
+
+            <div class="x11 margin-large-left">
+                <div class="margin-big-bottom padding-bottom border-small border-red border-bottom ">
+                    <h2>新增分享</h2>
+                </div>
+
+                <div class="box">
+
+                    <div class="head">
+                        <a class="button padding-large-left padding-large-right bg-inverse bg-yellow radius-none" href="/member/addshare?type=article">干　货</a>
+                        <a class="button padding-large-left padding-large-right bg-inverse bg-green radius-none" href="/member/addshare?type=video">视　频</a>
+                    </div>
+
+                    <div class="main margin-large-top">
+                        {if !empty($edit)}
+                        {$edit}
+                        {/if}
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+

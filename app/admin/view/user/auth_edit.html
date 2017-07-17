@@ -1,0 +1,53 @@
+<div class="margin-big-bottom">
+    <h2>{:isset($info['uid'])?'编辑':'新增'}权限组</h2>
+</div>
+
+<form class="form-horizontal">
+
+    {if (isset($info['id'])) }
+    <div class="form-group">
+        <div class="label">
+            <label>权限组ID </label><span class="text-gray">（权限组的唯一标识号）</span>
+        </div>
+        <div class="field">
+            <span class="input input-auto bg">{$info.id}</span>
+        </div>
+    </div>
+    {/if}
+
+    <div class="form-group">
+        <div class="label">
+            <label>权限组名 </label><span class="text-gray"></span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="title" value="{$info.title|default=''}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>权限组标识 </label><span class="text-gray">(权限组的英文标识)</span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="name" value="{$info.name|default=''}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="label">
+            <label>权限组描述 </label><span class="text-gray"></span>
+        </div>
+        <div class="field">
+            <input type="text" class="input input-auto" size="60" name="remark" value="{$info.remark|default=''}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" name="id" value="{$info.id|default=''}">
+        <a class="button bg-green padding-large-left padding-large-right" id="submit" href="{:U()}"
+           onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+        <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right"
+           href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回
+        </a>
+    </div>
+</form>

@@ -1,0 +1,82 @@
+﻿    <div class="margin-big-bottom">
+        <h2>网站设置 </h2>
+    </div>
+
+    <div class="tab">
+
+        <div class="tab-head">
+            <ul class="tab-nav">
+                {volist name="group" id="g" }
+                <li {if $g['id']== $id }class="active"{/if}><a href="{:U('config/set?id='.$g['id'])}" onfocus="this.blur()" onclick="adminAjaxAsk(this);return false;">{$g.title}</a></li>
+                {/volist}
+            </ul>
+        </div>
+        <div class="tab-body">
+            <form action="{:U()}" method="post" class="form-horizontal">
+                {volist name="config" id="c"}
+                    {switch name="c.type"}
+                        {case value="43"}
+                            <div class="form-group">
+                                <div class="label">
+                                    <label>{$c.title} </label><span class="text-gray">（{$c.remark}）</span>
+                                </div>
+                                <div class="field">
+                                    <input type="text" class="input input-auto" name="{$c.ckey}" size="60" value="{$c.cvalue|default=''}">
+                                </div>
+                            </div>
+                        {/case}
+                        {case value="44"}
+                            <div class="form-group">
+                                <div class="label">
+                                    <label>{$c.title} </label><span class="text-gray">（{$c.remark}）</span>
+                                </div>
+                                <div class="field">
+                                    <input type="text" class="input input-auto" name="{$c.ckey}" size="60" value="{$c.cvalue|default=''}">
+                                </div>
+                            </div>
+                        {/case}
+                        {case value="47"}
+                            <div class="form-group">
+                                <div class="label">
+                                    <label>{$c.title} </label><span class="text-gray">（{$c.remark}）</span>
+                                </div>
+                                <div class="field">
+                                    <textarea rows="5" class="input" name="{$c.ckey}" placeholder="" style="width:600px;">{$c.cvalue|default=''}</textarea>
+                                </div>
+                            </div>
+                        {/case}
+                        {case value="48"}
+                            <div class="form-group">
+                                <div class="label">
+                                    <label>{$c.title} </label><span class="text-gray">（{$c.remark}）</span>
+                                </div>
+                                <div class="field">
+                                    <input type="text" class="input input-auto" name="{$c.ckey}" size="60" value="{$config.ckey|default=''}">
+                                </div>
+                            </div>
+                        {/case}
+                        {case value="49"}
+                            <div class="form-group">
+                                <div class="label">
+                                    <label>{$c.title} </label><span class="text-gray">（{$c.remark}）</span>
+                                </div>
+                                <div class="field">
+                                    <select name="{$c.ckey}" class="input input-auto" style="width:433px;">
+                                        {volist name="c.enum" id="e"}
+                                        <option value="{$e.id}" {if $c['cvalue'] eq $e['id'] }selected="selected"{/if}>{$e.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                        {/case}
+                        {default /}
+                    {/switch}
+                {/volist}
+                <div class="form-group">
+                    <input type="hidden" name="id" value="{$id|default='0'}">
+                    <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+                    <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+                </div>
+            </form>
+        </div>
+    </div>

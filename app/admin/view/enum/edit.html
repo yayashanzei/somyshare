@@ -1,0 +1,80 @@
+﻿    <div class="margin-big-bottom">
+        <h2>{:isset($info['id'])?'编辑':'新增'}枚举</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-group">
+            <div class="label">
+                <label>上级菜单 </label><span class="text-gray">（所属的上级菜单）</span>
+            </div>
+            <div class="field">
+                <select name="pid" id="pid" class="input input-auto" style="width:433px;">
+                    {volist name="Menus" id="menu"}
+                    <option value="{$menu.id}">{$menu.title_show}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label">
+                <label>枚举组名 </label><span class="text-gray">（用于设置枚举组名称）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" name="title" size="60" value="{$info.title|default=''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label">
+                <label>排序 </label><span class="text-gray">（用于分组显示的顺序）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="20" name="sort" value="{$info.sort|default=0}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label">
+                <label>标识 </label><span class="text-gray">（设置缓存枚举分组标识，只能是英文）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="name" value="{$info.name|default=''}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>枚举值 </label><span class="text-gray">（用于需要特殊值的input框）</span>
+            </div>
+            <div class="field">
+                <input type="text" class="input input-auto" size="60" name="value" value="{$info.value|default=''}">
+            </div>
+        </div>
+        <div class="form-group button-group radio">
+            <div class="label">
+                <label>系统 </label><span class="text-gray"></span>
+            </div>
+            <label class="button">
+                <input name="issystem" value="1" type="radio"><span class="icon icon-check"></span> 是
+            </label>
+            <label class="button">
+                <input name="issystem" value="3" type="radio"><span class="icon icon-check"></span> 否
+            </label>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>描述 </label><span class="text-gray">（枚举描述）</span>
+            </div>
+            <div class="field">
+                <textarea rows="5" class="input" name="remark" placeholder="请输入枚举描述" style="width:600px;">{$info.remark|default=''}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <a class="button bg-green padding-large-left padding-large-right" id="submit" type="submit" target-form="form-horizontal" href="{:U()}" onclick="adminAjaxAsk(this,{type:'post',form:'form-horizontal'});return false;">确 定</a>
+            <a class="button bg-yellow margin-left margin-large-bottom margin-small-top padding-large-left padding-large-right" href="{:U()}" onclick="adminAjaxAsk(this,{history:true});return false;">返 回</a>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $("input[type=radio][name=issystem][value=" + {$info.issystem|default= '1'}+"]").attr("checked", 'checked').parent('.button').addClass('active');
+        setValue("pid", {$info.pid|default= 0});
+    </script>
